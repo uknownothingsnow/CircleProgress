@@ -5,6 +5,7 @@
     tools:context=".MyActivity">
 
     <me.bruce.circleprogress.CircleView
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:id="@+id/circleview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>
