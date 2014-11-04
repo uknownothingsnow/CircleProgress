@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -157,6 +159,42 @@ public class BaseProgress extends View {
     @Override
     protected int getSuggestedMinimumWidth() {
         return min_size;
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
+        bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
+        bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
+        bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
+        bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
+        bundle.putInt(INSTANCE_MAX, getMax());
+        bundle.putInt(INSTANCE_PROGRESS, getProgress());
+        bundle.putString(INSTANCE_SUFFIX, getSuffixText());
+        bundle.putString(INSTANCE_PREFIX, getPrefixText());
+        bundle.putBoolean(INSTANCE_SHOW_TEXT, showText);
+        return bundle;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(state instanceof Bundle) {
+            final Bundle bundle = (Bundle) state;
+            textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
+            textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
+            finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
+            unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
+            initPainters();
+            setMax(bundle.getInt(INSTANCE_MAX));
+            setProgress(bundle.getInt(INSTANCE_PROGRESS));
+            prefixText = bundle.getString(INSTANCE_PREFIX);
+            suffixText = bundle.getString(INSTANCE_SUFFIX);
+            showText = bundle.getBoolean(INSTANCE_SHOW_TEXT);
+            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
+            return;
+        }
+        super.onRestoreInstanceState(state);
     }
 
     public float getProgressPercentage() {

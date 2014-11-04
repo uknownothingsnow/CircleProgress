@@ -144,19 +144,9 @@ public class DonutProgress extends BaseProgress {
 
     @Override
     protected Parcelable onSaveInstanceState() {
-        final Bundle bundle = new Bundle();
-        bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
-        bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
-        bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
+        final Bundle bundle = (Bundle) super.onSaveInstanceState();
         bundle.putFloat(INSTANCE_FINISHED_STROKE_WIDTH, getFinishedStrokeWidth());
         bundle.putFloat(INSTANCE_UNFINISHED_STROKE_WIDTH, getUnfinishedStrokeWidth());
-        bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
-        bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
-        bundle.putInt(INSTANCE_MAX, getMax());
-        bundle.putInt(INSTANCE_PROGRESS, getProgress());
-        bundle.putString(INSTANCE_SUFFIX, getSuffixText());
-        bundle.putString(INSTANCE_PREFIX, getPrefixText());
-        bundle.putBoolean(INSTANCE_SHOW_TEXT, showText);
         return bundle;
     }
 
@@ -164,18 +154,8 @@ public class DonutProgress extends BaseProgress {
     protected void onRestoreInstanceState(Parcelable state) {
         if(state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
-            textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
-            textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
             finishedStrokeWidth = bundle.getFloat(INSTANCE_FINISHED_STROKE_WIDTH);
             unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
-            finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
-            unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
-            initPainters();
-            setMax(bundle.getInt(INSTANCE_MAX));
-            setProgress(bundle.getInt(INSTANCE_PROGRESS));
-            prefixText = bundle.getString(INSTANCE_PREFIX);
-            suffixText = bundle.getString(INSTANCE_SUFFIX);
-            showText = bundle.getBoolean(INSTANCE_SHOW_TEXT);
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
             return;
         }
