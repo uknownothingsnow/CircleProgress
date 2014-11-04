@@ -1,11 +1,40 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".MyActivity">
 
     <me.bruce.circleprogress.CircleView
         android:id="@+id/circleview"
+        custom:progress="30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-</RelativeLayout>
+
+    <me.bruce.circleprogress.CircleView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:progress="20"
+        custom:progress_unfinished_color="#ff0000"
+        custom:progress_finished_stroke_width="10dp"/>
+
+    <me.bruce.circleprogress.CircleView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:progress="20"
+        custom:progress_unfinished_color="#00ff00"
+        custom:progress_finished_stroke_width="10dp"/>
+
+    <me.bruce.circleprogress.CircleView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:progress="20"
+        custom:progress_unfinished_color="#ff0000"
+        custom:progress_unfinished_stroke_width="20dp"
+        custom:progress_finished_stroke_width="10dp"/>
+</LinearLayout>

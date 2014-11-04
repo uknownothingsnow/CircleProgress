@@ -36,9 +36,9 @@ public class CircleView extends View {
     private float unfinishedStrokeWidth;
     private int textColor;
 
-    private final int default_finished_color = Color.GREEN;
-    private final int default_unfinished_color = Color.LTGRAY;
-    private final int default_text_color = Color.BLACK;
+    private final int default_finished_color = Color.rgb(66, 145, 241);
+    private final int default_unfinished_color = Color.rgb(204, 204, 204);
+    private final int default_text_color = Color.rgb(66, 145, 241);
     private final float default_stroke_width;
     private final float default_text_size;
     private final int min_size;
@@ -214,13 +214,37 @@ public class CircleView extends View {
         return result;
     }
 
+    RectF finishedOuterRect = new RectF();
+    RectF unfinishedOuterRect = new RectF();
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        RectF outerRect = new RectF(getLeft() + finishedStrokeWidth / 2, getTop() + finishedStrokeWidth / 2, getRight() - finishedStrokeWidth / 2, getBottom() - finishedStrokeWidth / 2);
-        canvas.drawArc(outerRect, 0, getProgressAngle(), false, finishedPaint);
-        canvas.drawArc(outerRect, getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
-        canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, (getWidth() - finishedStrokeWidth) / 2.0f, innerCirclePaint);
+
+        if (finishedStrokeWidth > unfinishedStrokeWidth) {
+            finishedOuterRect.set(finishedStrokeWidth / 2,
+                finishedStrokeWidth / 2,
+                getWidth() - finishedStrokeWidth / 2,
+                getHeight() - finishedStrokeWidth / 2);
+            float delta = (finishedStrokeWidth - unfinishedStrokeWidth) / 2f;
+            unfinishedOuterRect.set(unfinishedStrokeWidth / 2,
+                unfinishedStrokeWidth / 2,
+                getWidth() - unfinishedStrokeWidth / 2 - delta,
+                getHeight() - unfinishedStrokeWidth / 2 - delta);
+        } else {
+            float delta = (unfinishedStrokeWidth - finishedStrokeWidth) / 2f;
+            finishedOuterRect.set(finishedStrokeWidth / 2,
+                finishedStrokeWidth / 2,
+                getWidth() - finishedStrokeWidth / 2 - delta,
+                getHeight() - finishedStrokeWidth / 2 - delta);
+            unfinishedOuterRect.set(unfinishedStrokeWidth / 2,
+                unfinishedStrokeWidth / 2,
+                getWidth() - unfinishedStrokeWidth / 2,
+                getHeight() - unfinishedStrokeWidth / 2);
+        }
+        float innerCircleRadius = getWidth() - Math.min(finishedStrokeWidth, unfinishedStrokeWidth) / 2.0f + Math.abs(finishedStrokeWidth - unfinishedStrokeWidth) / 2f;
+        canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, innerCircleRadius, innerCirclePaint);
+        canvas.drawArc(finishedOuterRect, 0, getProgressAngle(), false, finishedPaint);
+        canvas.drawArc(unfinishedOuterRect, getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
         if (showText) {
             String text = prefixText + progress + suffixText;
