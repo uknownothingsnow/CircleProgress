@@ -1,4 +1,4 @@
-package me.bruce.circleprogress.example;
+package me.bruce.circleprogress;
 
 import android.content.Context;
 import android.graphics.Bitmap;

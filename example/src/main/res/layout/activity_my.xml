@@ -37,7 +37,7 @@
         <!--custom:progress_unfinished_color="#ff0000"-->
         <!--custom:progress_unfinished_stroke_width="20dp"-->
         <!--custom:progress_finished_stroke_width="10dp"/>-->
-    <me.bruce.circleprogress.example.CircleProgress
+    <me.bruce.circleprogress.CircleProgress
         android:layout_width="100dp"
         android:layout_height="100dp"/>
 </LinearLayout>
