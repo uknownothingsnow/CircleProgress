@@ -23,11 +23,11 @@ public class BaseProgress extends View {
     protected boolean showText = true;
     protected int finishedStrokeColor;
     protected int unfinishedStrokeColor;
-    protected final int default_finished_color = Color.rgb(66, 145, 241);
-    protected final int default_unfinished_color = Color.rgb(204, 204, 204);
-    protected final int default_text_color = Color.rgb(66, 145, 241);
-    protected final float default_text_size;
-    protected final int min_size;
+    protected int default_finished_color = Color.rgb(66, 145, 241);
+    protected int default_unfinished_color = Color.rgb(204, 204, 204);
+    protected int default_text_color = Color.rgb(66, 145, 241);
+    protected float default_text_size;
+    protected int min_size;
 
     protected String prefixText = "";
     protected String suffixText = "%";
@@ -57,13 +57,16 @@ public class BaseProgress extends View {
 
     public BaseProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs,defStyleAttr);
-
-        default_text_size = sp2px(18);
-        min_size = (int) dp2px(100);
-
+        initConstants();
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircleProgress, defStyleAttr, 0);
         initByAttributes(attributes);
         attributes.recycle();
+        initPainters();
+    }
+
+    protected void initConstants() {
+        default_text_size = sp2px(18);
+        min_size = (int) dp2px(100);
     }
 
     protected void initByAttributes(TypedArray attributes) {
@@ -79,6 +82,12 @@ public class BaseProgress extends View {
 
         setProgress(attributes.getInt(R.styleable.CircleProgress_progress, 0));
         setMax(attributes.getInt(R.styleable.CircleProgress_max, 100));
+    }
+
+    protected void initPainters() {
+        textPaint = new Paint();
+        textPaint.setColor(textColor);
+        textPaint.setTextSize(textSize);
     }
 
     public int getProgress() {
@@ -136,6 +145,10 @@ public class BaseProgress extends View {
         return suffixText;
     }
 
+    public String getDrawText() {
+        return getPrefixText() + getProgress() + getSuffixText();
+    }
+
     @Override
     protected int getSuggestedMinimumHeight() {
         return min_size;
@@ -144,6 +157,10 @@ public class BaseProgress extends View {
     @Override
     protected int getSuggestedMinimumWidth() {
         return min_size;
+    }
+
+    public float getProgressPercentage() {
+        return getProgress() / (float) getMax();
     }
 
     protected float dp2px(float dp) {

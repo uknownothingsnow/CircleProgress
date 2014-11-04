@@ -9,7 +9,6 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by bruce on 14-10-30.
@@ -22,7 +21,7 @@ public class DonutProgress extends BaseProgress {
     private float finishedStrokeWidth;
     private float unfinishedStrokeWidth;
 
-    private final float default_stroke_width;
+    private float default_stroke_width;
 
     RectF finishedOuterRect = new RectF();
     RectF unfinishedOuterRect = new RectF();
@@ -40,11 +39,17 @@ public class DonutProgress extends BaseProgress {
 
     public DonutProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        default_stroke_width = dp2px(10);
-        initPaints();
     }
 
-    private void initPaints() {
+    @Override
+    protected void initConstants() {
+        super.initConstants();
+        default_stroke_width = dp2px(10);
+    }
+
+    @Override
+    protected void initPainters() {
+        super.initPainters();
         finishedPaint = new Paint();
         finishedPaint.setColor(finishedStrokeColor);
         finishedPaint.setStyle(Paint.Style.STROKE);
@@ -59,10 +64,6 @@ public class DonutProgress extends BaseProgress {
 
         innerCirclePaint = new Paint();
         innerCirclePaint.setColor(Color.WHITE);
-
-        textPaint = new Paint();
-        textPaint.setColor(textColor);
-        textPaint.setTextSize(textSize);
     }
 
     @Override
@@ -169,7 +170,7 @@ public class DonutProgress extends BaseProgress {
             unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
-            initPaints();
+            initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);

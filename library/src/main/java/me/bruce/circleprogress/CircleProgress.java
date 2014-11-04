@@ -14,16 +14,13 @@ import android.graphics.Shader;
 import android.graphics.Xfermode;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by bruce on 11/4/14.
  */
-public class CircleProgress extends View {
-    private static final int DEFAULT_SIZE = 100;
-
-    private Bitmap srcBitmap;
-    private Bitmap destBitmap;
+public class CircleProgress extends BaseProgress {
+    private Bitmap finishedBitmap;
+    private Bitmap unfinishedBitmap;
     private Shader shader;     // background checker-board pattern
 
     private static final Xfermode mode = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
@@ -39,10 +36,6 @@ public class CircleProgress extends View {
     public CircleProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        srcBitmap = makeSrc(DEFAULT_SIZE);
-        destBitmap = makeDst(DEFAULT_SIZE);
-
-        // make a ckeckerboard pattern
         Bitmap bm = Bitmap.createBitmap(new int[] { 0xFFFFFFFF }, 1, 1,
             Bitmap.Config.RGB_565);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
@@ -58,6 +51,12 @@ public class CircleProgress extends View {
         shader.setLocalMatrix(m);
     }
 
+    @Override
+    protected void initConstants() {
+        super.initConstants();
+        default_text_color = Color.WHITE;
+    }
+
     public static Bitmap makeAlpha(Bitmap bit) {
         int width =  bit.getWidth();
         int height = bit.getHeight();
@@ -68,53 +67,57 @@ public class CircleProgress extends View {
         return myBitmap;
     }
 
-    private Bitmap makeDst(int size) {
+    private Bitmap makeUnfinishedBitmap(int size) {
         Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bm);
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        p.setColor(0xFFFFCC44);
+        p.setColor(getUnfinishedStrokeColor());
         c.drawOval(new RectF(0, 0, size, size), p);
         return bm;
     }
 
     // create a bitmap with a rect, used for the "src" image
-    private Bitmap makeSrc(int size) {
+    private Bitmap makeFinishedBitmap(int size) {
         Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bm);
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Canvas canvas = new Canvas(bm);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        p.setColor(0xFF66AAFF);
-        c.drawRect(0, size/3, size, size, p);
+        paint.setColor(getFinishedStrokeColor());
+        canvas.drawRect(0, size * (1 - getProgressPercentage()), size, size, paint);
         return bm;
     }
 
     @Override protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
         Paint paint = new Paint();
         paint.setFilterBitmap(false);
-
-        canvas.translate(15, 35);
-
-        int x = 0;
-        int y = 0;
-        // draw the checker-board pattern
         paint.setStyle(Paint.Style.FILL);
         paint.setShader(shader);
-        canvas.drawRect(x, y, x + DEFAULT_SIZE, y + DEFAULT_SIZE, paint);
 
-        // draw the src/dst example into our offscreen bitmap
-        int sc = canvas.saveLayer(x, y, x + DEFAULT_SIZE, y + DEFAULT_SIZE, null,
+        int sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null,
             Canvas.MATRIX_SAVE_FLAG |
                 Canvas.CLIP_SAVE_FLAG |
                 Canvas.HAS_ALPHA_LAYER_SAVE_FLAG |
                 Canvas.FULL_COLOR_LAYER_SAVE_FLAG |
                 Canvas.CLIP_TO_LAYER_SAVE_FLAG);
-        canvas.translate(x, y);
-        canvas.drawBitmap(destBitmap, 0, 0, paint);
+        if (finishedBitmap != null && !finishedBitmap.isRecycled()) {
+            finishedBitmap.recycle();
+        }
+        if (unfinishedBitmap != null && !unfinishedBitmap.isRecycled()) {
+            unfinishedBitmap.recycle();
+        }
+        finishedBitmap = makeFinishedBitmap(min_size);
+        unfinishedBitmap = makeUnfinishedBitmap(min_size);
+        canvas.drawBitmap(unfinishedBitmap, 0, 0, paint);
         paint.setXfermode(mode);
-        canvas.drawBitmap(srcBitmap, 0, 0, paint);
+        canvas.drawBitmap(finishedBitmap, 0, 0, paint);
         paint.setXfermode(null);
-        canvas.restoreToCount(sc);
+
+        String text = getDrawText();
+        float textHeight = textPaint.descent() + textPaint.ascent();
+        canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
+        if (!isInEditMode()) {
+            canvas.restoreToCount(sc);
+        }
     }
 }

@@ -7,37 +7,67 @@
     android:gravity="center"
     tools:context=".MyActivity">
 
-    <me.bruce.circleprogress.DonutProgress
-        android:id="@+id/circleview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:progress="30"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <me.bruce.circleprogress.DonutProgress
+        <me.bruce.circleprogress.DonutProgress
+            android:layout_marginLeft="50dp"
+            android:id="@+id/donut_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:progress="30"/>
+
+        <me.bruce.circleprogress.DonutProgress
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:progress="20"
+            custom:progress_unfinished_color="#ff0000"
+            custom:progress_finished_stroke_width="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:progress="20"
-        custom:progress_unfinished_color="#ff0000"
-        custom:progress_finished_stroke_width="10dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <!--<me.bruce.circleprogress.CircleView-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--custom:progress="20"-->
-        <!--custom:progress_unfinished_color="#00ff00"-->
-        <!--custom:progress_finished_stroke_width="10dp"/>-->
+        <me.bruce.circleprogress.DonutProgress
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:progress="20"
+            custom:progress_unfinished_color="#00ff00"
+            custom:progress_finished_stroke_width="10dp"/>
 
-    <!--<me.bruce.circleprogress.CircleView-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--custom:progress="20"-->
-        <!--custom:progress_unfinished_color="#ff0000"-->
-        <!--custom:progress_unfinished_stroke_width="20dp"-->
-        <!--custom:progress_finished_stroke_width="10dp"/>-->
-    <me.bruce.circleprogress.CircleProgress
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        <me.bruce.circleprogress.DonutProgress
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:progress="20"
+            custom:progress_unfinished_color="#ff0000"
+            custom:progress_unfinished_stroke_width="20dp"
+            custom:progress_finished_stroke_width="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <me.bruce.circleprogress.CircleProgress
+            android:id="@+id/circle_progress"
+            android:layout_marginLeft="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            custom:progress="10"/>
+
+        <me.bruce.circleprogress.CircleProgress
+            android:layout_marginLeft="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            custom:progress="50"
+            custom:progress_finished_color="#ff0000"
+            custom:progress_unfinished_color="#00ff00"/>
+    </LinearLayout>
 </LinearLayout>
