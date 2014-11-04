@@ -14,7 +14,7 @@ import android.view.View;
 /**
  * Created by bruce on 14-10-30.
  */
-public class CircleView extends View {
+public class DonutProgress extends View {
     private Paint finishedPaint;
     private Paint unfinishedPaint;
     private Paint innerCirclePaint;
@@ -46,6 +46,9 @@ public class CircleView extends View {
     private String prefixText = "";
     private String suffixText = "%";
 
+    RectF finishedOuterRect = new RectF();
+    RectF unfinishedOuterRect = new RectF();
+
     private static final String INSTANCE_STATE = "saved_instance";
     private static final String INSTANCE_TEXT_COLOR = "text_color";
     private static final String INSTANCE_TEXT_SIZE = "text_size";
@@ -59,15 +62,15 @@ public class CircleView extends View {
     private static final String INSTANCE_PREFIX = "prefix";
     private static final String INSTANCE_SHOW_TEXT = "show_text";
 
-    public CircleView(Context context) {
+    public DonutProgress(Context context) {
         this(context, null);
     }
 
-    public CircleView(Context context, AttributeSet attrs) {
+    public DonutProgress(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DonutProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         default_stroke_width = dp2px(10);
@@ -92,7 +95,6 @@ public class CircleView extends View {
         setProgress(attributes.getInt(R.styleable.CircleProgress_progress, 0));
         setMax(attributes.getInt(R.styleable.CircleProgress_max, 100));
         attributes.recycle();
-
         initPaints();
     }
 
@@ -214,8 +216,6 @@ public class CircleView extends View {
         return result;
     }
 
-    RectF finishedOuterRect = new RectF();
-    RectF unfinishedOuterRect = new RectF();
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -241,7 +241,7 @@ public class CircleView extends View {
                 getWidth() - unfinishedStrokeWidth / 2,
                 getHeight() - unfinishedStrokeWidth / 2);
         }
-        float innerCircleRadius = getWidth() - Math.min(finishedStrokeWidth, unfinishedStrokeWidth) / 2.0f + Math.abs(finishedStrokeWidth - unfinishedStrokeWidth) / 2f;
+        float innerCircleRadius = (getWidth() - Math.min(finishedStrokeWidth, unfinishedStrokeWidth) + Math.abs(finishedStrokeWidth - unfinishedStrokeWidth)) / 2f;
         canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, innerCircleRadius, innerCirclePaint);
         canvas.drawArc(finishedOuterRect, 0, getProgressAngle(), false, finishedPaint);
         canvas.drawArc(unfinishedOuterRect, getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);

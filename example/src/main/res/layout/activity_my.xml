@@ -7,13 +7,13 @@
     android:gravity="center"
     tools:context=".MyActivity">
 
-    <me.bruce.circleprogress.CircleView
+    <me.bruce.circleprogress.DonutProgress
         android:id="@+id/circleview"
-        custom:progress="30"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        custom:progress="30"/>
 
-    <me.bruce.circleprogress.CircleView
+    <me.bruce.circleprogress.DonutProgress
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,20 +21,23 @@
         custom:progress_unfinished_color="#ff0000"
         custom:progress_finished_stroke_width="10dp"/>
 
-    <me.bruce.circleprogress.CircleView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:progress="20"
-        custom:progress_unfinished_color="#00ff00"
-        custom:progress_finished_stroke_width="10dp"/>
+    <!--<me.bruce.circleprogress.CircleView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--custom:progress="20"-->
+        <!--custom:progress_unfinished_color="#00ff00"-->
+        <!--custom:progress_finished_stroke_width="10dp"/>-->
 
-    <me.bruce.circleprogress.CircleView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:progress="20"
-        custom:progress_unfinished_color="#ff0000"
-        custom:progress_unfinished_stroke_width="20dp"
-        custom:progress_finished_stroke_width="10dp"/>
+    <!--<me.bruce.circleprogress.CircleView-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--custom:progress="20"-->
+        <!--custom:progress_unfinished_color="#ff0000"-->
+        <!--custom:progress_unfinished_stroke_width="20dp"-->
+        <!--custom:progress_finished_stroke_width="10dp"/>-->
+    <me.bruce.circleprogress.example.CircleProgress
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
 </LinearLayout>
