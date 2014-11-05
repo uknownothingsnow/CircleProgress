@@ -1,26 +1,20 @@
 package me.bruce.circleprogress;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
 import android.graphics.Region;
-import android.graphics.Shader;
-import android.graphics.Xfermode;
-import android.os.Build;
 import android.util.AttributeSet;
 
 /**
  * Created by bruce on 11/4/14.
  */
 public class CircleProgress extends BaseProgress {
+    private Paint paint = new Paint();
+    private Path path = new Path();
+    
     public CircleProgress(Context context) {
         this(context, null);
     }
@@ -40,9 +34,9 @@ public class CircleProgress extends BaseProgress {
     }
 
     @Override protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint();
-        Path path = new Path();
-        path.addCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2, Path.Direction.CCW);
+        if (path.isEmpty()) {
+            path.addCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2, Path.Direction.CCW);
+        }
 
         canvas.clipPath(path, Region.Op.INTERSECT);
         paint.setColor(getUnfinishedStrokeColor());
