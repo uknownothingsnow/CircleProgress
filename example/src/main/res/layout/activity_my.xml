@@ -16,15 +16,15 @@
             android:id="@+id/donut_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:progress="30"/>
+            custom:donut_progress="30"/>
 
         <me.bruce.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:progress="20"
-            custom:progress_unfinished_color="#ff0000"
-            custom:progress_finished_stroke_width="10dp"/>
+            custom:donut_progress="20"
+            custom:donut_unfinished_color="#ff0000"
+            custom:donut_finished_stroke_width="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -33,10 +33,21 @@
         android:layout_height="wrap_content">
 
         <me.bruce.circleprogress.ArcProgress
+            android:id="@+id/arc_progress"
             android:background="#214193"
             android:layout_marginLeft="50dp"
             android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            custom:arc_progress="10"
+            custom:arc_bottom_text="MEMORY"/>
+
+        <me.bruce.circleprogress.ArcProgress
+            android:background="#214193"
+            android:layout_marginLeft="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            custom:arc_progress="30"
+            custom:arc_bottom_text="STORAGE"/>
     </LinearLayout>
 
     <LinearLayout
@@ -48,18 +59,18 @@
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:progress="20"
-            custom:progress_unfinished_color="#00ff00"
-            custom:progress_finished_stroke_width="10dp"/>
+            custom:donut_progress="20"
+            custom:donut_unfinished_color="#00ff00"
+            custom:donut_finished_stroke_width="10dp"/>
 
         <me.bruce.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:progress="20"
-            custom:progress_unfinished_color="#ff0000"
-            custom:progress_unfinished_stroke_width="20dp"
-            custom:progress_finished_stroke_width="10dp"/>
+            custom:donut_progress="20"
+            custom:donut_unfinished_color="#ff0000"
+            custom:donut_unfinished_stroke_width="20dp"
+            custom:donut_finished_stroke_width="10dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -72,14 +83,14 @@
             android:layout_marginLeft="50dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            custom:progress="10"/>
+            custom:circle_progress="10"/>
 
         <me.bruce.circleprogress.CircleProgress
             android:layout_marginLeft="50dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            custom:progress="50"
-            custom:progress_finished_color="#ff0000"
-            custom:progress_unfinished_color="#00ff00"/>
+            custom:circle_progress="50"
+            custom:circle_finished_color="#ff0000"
+            custom:circle_unfinished_color="#00ff00"/>
     </LinearLayout>
 </LinearLayout>

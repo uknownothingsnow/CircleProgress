@@ -1,19 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CircleProgress">
-        <attr name="progress" format="integer"/>
-        <attr name="max" format="integer"/>
+        <attr name="circle_progress" format="integer"/>
+        <attr name="circle_max" format="integer"/>
 
-        <attr name="progress_unfinished_color" format="color"/>
-        <attr name="progress_finished_color" format="color"/>
+        <attr name="circle_unfinished_color" format="color"/>
+        <attr name="circle_finished_color" format="color"/>
 
-        <attr name="progress_finished_stroke_width" format="dimension"/>
-        <attr name="progress_unfinished_stroke_width" format="dimension"/>
+        <attr name="circle_finished_stroke_width" format="dimension"/>
+        <attr name="circle_unfinished_stroke_width" format="dimension"/>
 
-        <attr name="progress_text_size" format="dimension"/>
-        <attr name="progress_text_color" format="color"/>
+        <attr name="circle_text_size" format="dimension"/>
+        <attr name="circle_text_color" format="color"/>
 
-        <attr name="progress_text_visibility" format="enum">
+        <attr name="circle_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DonutProgress">
+        <attr name="donut_progress" format="integer"/>
+        <attr name="donut_max" format="integer"/>
+
+        <attr name="donut_unfinished_color" format="color"/>
+        <attr name="donut_finished_color" format="color"/>
+
+        <attr name="donut_finished_stroke_width" format="dimension"/>
+        <attr name="donut_unfinished_stroke_width" format="dimension"/>
+
+        <attr name="donut_text_size" format="dimension"/>
+        <attr name="donut_text_color" format="color"/>
+
+        <attr name="donut_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ArcProgress">
+        <attr name="arc_progress" format="integer"/>
+        <attr name="arc_stroke_width" format="dimension"/>
+        <attr name="arc_max" format="integer"/>
+
+        <attr name="arc_unfinished_color" format="color"/>
+        <attr name="arc_finished_color" format="color"/>
+
+        <attr name="arc_text_size" format="dimension"/>
+        <attr name="arc_text_color" format="color"/>
+
+        <attr name="arc_suffix_text" format="string"/>
+        <attr name="arc_suffix_text_size" format="dimension"/>
+        <attr name="arc_suffix_text_color" format="color"/>
+
+        <attr name="arc_bottom_text" format="string"/>
+        <attr name="arc_bottom_text_size" format="dimension"/>
+        <attr name="arc_bottom_text_color" format="color"/>
+
+        <attr name="arc_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+
+        <attr name="arc_suffix_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+
+        <attr name="arc_bottom_text_visibility" format="enum">
             <enum name="visible" value="0"/>
             <enum name="invisible" value="1"/>
         </attr>
@@ -21,5 +75,7 @@
 
     <declare-styleable name="Themes">
         <attr name="circleProgressStyle" format="reference"/>
+        <attr name="donutProgressStyle" format="reference"/>
+        <attr name="arcProgressStyle" format="reference"/>
     </declare-styleable>
 </resources>

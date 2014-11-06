@@ -6,6 +6,7 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import me.bruce.circleprogress.ArcProgress;
 import me.bruce.circleprogress.CircleProgress;
 import me.bruce.circleprogress.DonutProgress;
 
@@ -14,6 +15,7 @@ public class MyActivity extends ActionBarActivity {
     private Timer timer;
     private DonutProgress donutProgress;
     private CircleProgress circleProgress;
+    private ArcProgress arcProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,7 @@ public class MyActivity extends ActionBarActivity {
         setContentView(R.layout.activity_my);
         donutProgress = (DonutProgress) findViewById(R.id.donut_progress);
         circleProgress = (CircleProgress) findViewById(R.id.circle_progress);
+        arcProgress = (ArcProgress) findViewById(R.id.arc_progress);
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -31,6 +34,7 @@ public class MyActivity extends ActionBarActivity {
                     public void run() {
                         donutProgress.setProgress(donutProgress.getProgress() + 1);
                         circleProgress.setProgress(circleProgress.getProgress() + 1);
+                        arcProgress.setProgress(arcProgress.getProgress() + 1);
                     }
                 });
             }
