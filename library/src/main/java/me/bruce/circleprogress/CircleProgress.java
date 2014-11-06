@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Created by bruce on 11/4/14.
@@ -34,6 +36,10 @@ public class CircleProgress extends BaseProgress {
     }
 
     @Override protected void onDraw(Canvas canvas) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
         if (path.isEmpty()) {
             path.addCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2, Path.Direction.CCW);
         }
@@ -42,6 +48,7 @@ public class CircleProgress extends BaseProgress {
         paint.setColor(getUnfinishedStrokeColor());
         canvas.drawCircle(getWidth()/2, getHeight()/2, getWidth()/2, paint);
 
+        canvas.clipPath(path, Region.Op.INTERSECT);
         paint.setColor(getFinishedStrokeColor());
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(0, getHeight() * (1 - getProgressPercentage()), getWidth(), getHeight(), paint);

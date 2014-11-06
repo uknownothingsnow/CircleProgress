@@ -32,6 +32,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <me.bruce.circleprogress.ArcProgress
+            android:background="#214193"
+            android:layout_marginLeft="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <me.bruce.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
