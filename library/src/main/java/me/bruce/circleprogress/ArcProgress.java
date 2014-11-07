@@ -36,6 +36,8 @@ public class ArcProgress extends View {
     private String suffixText = "%";
     private float suffixTextPadding;
 
+    private float arcBottomHeight;
+
     private final int default_finished_color = Color.WHITE;
     private final int default_unfinished_color = Color.rgb(72, 106, 176);
     private final int default_text_color = Color.rgb(66, 145, 241);
@@ -246,6 +248,9 @@ public class ArcProgress extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         rectF.set(strokeWidth / 2f, strokeWidth / 2f, getWidth() - strokeWidth / 2f, getHeight() - strokeWidth / 2f);
+        float radius = getWidth() / 2f;
+        float angle = (360 - arcAngle) / 2f;
+        arcBottomHeight = radius * (float) (1 - Math.cos(angle / 180 * Math.PI));
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -253,7 +258,7 @@ public class ArcProgress extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float startAngle = 270 - arcAngle / 2f;
-        float finishedSweepAngle = progress / 100f * arcAngle;
+        float finishedSweepAngle = progress / (float) getMax() * arcAngle;
         float finishedStartAngle = startAngle;
         paint.setColor(unfinishedStrokeColor);
         canvas.drawArc(rectF, startAngle, arcAngle, false, paint);
@@ -274,7 +279,7 @@ public class ArcProgress extends View {
 
         if (!TextUtils.isEmpty(getBottomText())) {
             textPaint.setTextSize(bottomTextSize);
-            float bottomTextBaseline = getHeight() - (float) Math.tan(15 / 180f * Math.PI) * getWidth() / 2 - (textPaint.descent() + textPaint.ascent());
+            float bottomTextBaseline = getHeight() - arcBottomHeight - (textPaint.descent() + textPaint.ascent()) / 2;
             canvas.drawText(getBottomText(), (getWidth() - textPaint.measureText(getBottomText())) / 2.0f, bottomTextBaseline, textPaint);
         }
     }
