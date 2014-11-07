@@ -236,6 +236,19 @@ public class DonutProgress extends View {
         this.innerBackgroundColor = innerBackgroundColor;
     }
 
+    public void setTextVisibility(ProgressTextVisibility visibility) {
+        if (visibility == ProgressTextVisibility.Invisible) {
+            showText = false;
+        } else {
+            showText = true;
+        }
+        invalidate();
+    }
+
+    public ProgressTextVisibility getTextVisibility() {
+        return showText ? ProgressTextVisibility.Visible : ProgressTextVisibility.Invisible;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));

@@ -229,6 +229,19 @@ public class ArcProgress extends View {
         this.suffixText = suffixText;
     }
 
+    public void setTextVisibility(ProgressTextVisibility visibility) {
+        if (visibility == ProgressTextVisibility.Invisible) {
+            showText = false;
+        } else {
+            showText = true;
+        }
+        invalidate();
+    }
+
+    public ProgressTextVisibility getTextVisibility() {
+        return showText ? ProgressTextVisibility.Visible : ProgressTextVisibility.Invisible;
+    }
+
     @Override
     protected int getSuggestedMinimumHeight() {
         return min_size;

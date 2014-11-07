@@ -176,6 +176,19 @@ public class CircleProgress extends View {
         return getPrefixText() + getProgress() + getSuffixText();
     }
 
+    public void setTextVisibility(ProgressTextVisibility visibility) {
+        if (visibility == ProgressTextVisibility.Invisible) {
+            showText = false;
+        } else {
+            showText = true;
+        }
+        invalidate();
+    }
+
+    public ProgressTextVisibility getTextVisibility() {
+        return showText ? ProgressTextVisibility.Visible : ProgressTextVisibility.Invisible;
+    }
+
     @Override
     protected int getSuggestedMinimumHeight() {
         return min_size;
