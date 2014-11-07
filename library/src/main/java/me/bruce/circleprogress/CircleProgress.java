@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.View;
  */
 public class CircleProgress extends View {
     private Paint textPaint;
+    private RectF rectF = new RectF();
 
     private float textSize;
     private int textColor;
@@ -48,8 +50,7 @@ public class CircleProgress extends View {
     private static final String INSTANCE_PREFIX = "prefix";
 
     private Paint paint = new Paint();
-    private Path path = new Path();
-    
+
     public CircleProgress(Context context) {
         this(context, null);
     }
@@ -93,6 +94,8 @@ public class CircleProgress extends View {
         textPaint.setColor(textColor);
         textPaint.setTextSize(textSize);
         textPaint.setAntiAlias(true);
+
+        paint.setAntiAlias(true);
     }
 
     public int getProgress() {
@@ -184,23 +187,27 @@ public class CircleProgress extends View {
         return getProgress() / (float) getMax();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        rectF.set(0, 0, getWidth(), getHeight());
+        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+    }
+
     @Override protected void onDraw(Canvas canvas) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
-
-        if (path.isEmpty()) {
-            path.addCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2, Path.Direction.CCW);
-        }
-
-        canvas.clipPath(path, Region.Op.INTERSECT);
+        float yHeight = getProgress() / (float) getMax() * getHeight();
+        float radius = getWidth() / 2f;
+        float angle = (float) (Math.acos((radius - yHeight) / radius) * 180 / Math.PI);
+        float startAngle = 90 + angle;
+        float sweepAngle = 360 - angle * 2;
         paint.setColor(getUnfinishedColor());
-        canvas.drawCircle(getWidth()/2, getHeight()/2, getWidth()/2, paint);
+        canvas.drawArc(rectF, startAngle, sweepAngle, false, paint);
 
-        canvas.clipPath(path, Region.Op.INTERSECT);
+        canvas.save();
+        canvas.rotate(180, getWidth() / 2, getHeight() / 2);
         paint.setColor(getFinishedColor());
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(0, getHeight() * (1 - getProgressPercentage()), getWidth(), getHeight(), paint);
+        canvas.drawArc(rectF, 270 - angle, angle * 2, false, paint);
+        canvas.restore();
 
         String text = getDrawText();
         if (!TextUtils.isEmpty(text)) {

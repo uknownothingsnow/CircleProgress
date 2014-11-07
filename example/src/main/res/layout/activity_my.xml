@@ -89,7 +89,7 @@
             android:layout_marginLeft="50dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            custom:circle_progress="50"
+            custom:circle_progress="25"
             custom:circle_finished_color="#ff0000"
             custom:circle_unfinished_color="#00ff00"/>
     </LinearLayout>
