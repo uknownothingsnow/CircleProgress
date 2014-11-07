@@ -19,54 +19,46 @@ public class DonutProgress extends View {
     private Paint finishedPaint;
     private Paint unfinishedPaint;
     private Paint innerCirclePaint;
-
-    private float finishedStrokeWidth;
-    private float unfinishedStrokeWidth;
-
-    private float default_stroke_width;
-
-    RectF finishedOuterRect = new RectF();
-    RectF unfinishedOuterRect = new RectF();
-
-    private static final String INSTANCE_FINISHED_STROKE_WIDTH = "finished_stroke_width";
-    private static final String INSTANCE_UNFINISHED_STROKE_WIDTH = "unfinished_stroke_width";
-
-    protected static final int PROGRESS_TEXT_VISIBLE = 0;
-    protected static final int PROGRESS_TEXT_INVISIBLE = 1;
-
     protected Paint textPaint;
 
-    protected float textSize;
-    protected int textColor;
-    protected int progress = 0;
-    protected int max;
-    protected boolean showText = true;
-    protected int finishedStrokeColor;
-    protected int unfinishedStrokeColor;
-    protected int default_finished_color = Color.rgb(66, 145, 241);
-    protected int default_unfinished_color = Color.rgb(204, 204, 204);
-    protected int default_text_color = Color.rgb(66, 145, 241);
-    protected int default_max = 100;
-    protected float default_text_size;
-    protected int min_size;
+    private RectF finishedOuterRect = new RectF();
+    private RectF unfinishedOuterRect = new RectF();
 
-    protected String prefixText = "";
-    protected String suffixText = "%";
+    private float textSize;
+    private int textColor;
+    private int progress = 0;
+    private int max;
+    private boolean showText = true;
+    private int finishedStrokeColor;
+    private int unfinishedStrokeColor;
+    private float finishedStrokeWidth;
+    private float unfinishedStrokeWidth;
+    private int innerBackgroundColor;
+    private String prefixText = "";
+    private String suffixText = "%";
 
-    protected static final String INSTANCE_STATE = "saved_instance";
-    protected static final String INSTANCE_TEXT_COLOR = "text_color";
-    protected static final String INSTANCE_TEXT_SIZE = "text_size";
-    protected static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
-    protected static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
-    protected static final String INSTANCE_MAX = "max";
-    protected static final String INSTANCE_PROGRESS = "progress";
-    protected static final String INSTANCE_SUFFIX = "suffix";
-    protected static final String INSTANCE_PREFIX = "prefix";
-    protected static final String INSTANCE_SHOW_TEXT = "show_text";
+    private final float default_stroke_width;
+    private final int default_finished_color = Color.rgb(66, 145, 241);
+    private final int default_unfinished_color = Color.rgb(204, 204, 204);
+    private final int default_text_color = Color.rgb(66, 145, 241);
+    private final int default_inner_background_color = Color.TRANSPARENT;
+    private final int default_max = 100;
+    private final float default_text_size;
+    private final int min_size;
 
-    public enum ProgressTextVisibility{
-        Visible,Invisible
-    };
+    private static final String INSTANCE_STATE = "saved_instance";
+    private static final String INSTANCE_TEXT_COLOR = "text_color";
+    private static final String INSTANCE_TEXT_SIZE = "text_size";
+    private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
+    private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
+    private static final String INSTANCE_MAX = "max";
+    private static final String INSTANCE_PROGRESS = "progress";
+    private static final String INSTANCE_SUFFIX = "suffix";
+    private static final String INSTANCE_PREFIX = "prefix";
+    private static final String INSTANCE_SHOW_TEXT = "show_text";
+    private static final String INSTANCE_FINISHED_STROKE_WIDTH = "finished_stroke_width";
+    private static final String INSTANCE_UNFINISHED_STROKE_WIDTH = "unfinished_stroke_width";
+    private static final String INSTANCE_BACKGROUND_COLOR = "inner_background_color";
 
     public DonutProgress(Context context) {
         this(context, null);
@@ -79,19 +71,15 @@ public class DonutProgress extends View {
     public DonutProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        initConstants();
+        default_text_size = Utils.sp2px(getResources(), 18);
+        min_size = (int) Utils.dp2px(getResources(), 100);
+        default_stroke_width = Utils.dp2px(getResources(), 10);
 
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DonutProgress, defStyleAttr, 0);
         initByAttributes(attributes);
         attributes.recycle();
 
         initPainters();
-    }
-
-    protected void initConstants() {
-        default_text_size = Utils.sp2px(getResources(), 18);
-        min_size = (int) Utils.dp2px(getResources(), 100);
-        default_stroke_width = Utils.dp2px(getResources(), 10);
     }
 
     protected void initPainters() {
@@ -113,7 +101,8 @@ public class DonutProgress extends View {
         unfinishedPaint.setStrokeWidth(unfinishedStrokeWidth);
 
         innerCirclePaint = new Paint();
-        innerCirclePaint.setColor(Color.WHITE);
+        innerCirclePaint.setColor(innerBackgroundColor);
+        innerCirclePaint.setAntiAlias(true);
     }
 
     protected void initByAttributes(TypedArray attributes) {
@@ -122,8 +111,8 @@ public class DonutProgress extends View {
         textColor = attributes.getColor(R.styleable.DonutProgress_donut_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.DonutProgress_donut_text_size, default_text_size);
 
-        int textVisible = attributes.getInt(R.styleable.DonutProgress_donut_text_visibility, PROGRESS_TEXT_VISIBLE);
-        if(textVisible != PROGRESS_TEXT_VISIBLE){
+        int textVisible = attributes.getInt(R.styleable.DonutProgress_donut_text_visibility, ProgressTextVisibility.Visible.ordinal());
+        if(textVisible != ProgressTextVisibility.Visible.ordinal()){
             showText = false;
         }
 
@@ -131,14 +120,29 @@ public class DonutProgress extends View {
         setProgress(attributes.getInt(R.styleable.DonutProgress_donut_progress, 0));
         finishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_finished_stroke_width, default_stroke_width);
         unfinishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_unfinished_stroke_width, default_stroke_width);
+        if (attributes.getString(R.styleable.DonutProgress_donut_prefix_text) != null) {
+            prefixText = attributes.getString(R.styleable.DonutProgress_donut_prefix_text);
+        }
+        if (attributes.getString(R.styleable.DonutProgress_donut_suffix_text) != null) {
+            suffixText = attributes.getString(R.styleable.DonutProgress_donut_suffix_text);
+        }
+        innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
     }
 
     public float getFinishedStrokeWidth() {
         return finishedStrokeWidth;
     }
 
+    public void setFinishedStrokeWidth(float finishedStrokeWidth) {
+        this.finishedStrokeWidth = finishedStrokeWidth;
+    }
+
     public float getUnfinishedStrokeWidth() {
         return unfinishedStrokeWidth;
+    }
+
+    public void setUnfinishedStrokeWidth(float unfinishedStrokeWidth) {
+        this.unfinishedStrokeWidth = unfinishedStrokeWidth;
     }
 
     private float getProgressAngle() {
@@ -224,6 +228,14 @@ public class DonutProgress extends View {
         this.prefixText = prefixText;
     }
 
+    public int getInnerBackgroundColor() {
+        return innerBackgroundColor;
+    }
+
+    public void setInnerBackgroundColor(int innerBackgroundColor) {
+        this.innerBackgroundColor = innerBackgroundColor;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
@@ -296,6 +308,7 @@ public class DonutProgress extends View {
         bundle.putBoolean(INSTANCE_SHOW_TEXT, showText);
         bundle.putFloat(INSTANCE_FINISHED_STROKE_WIDTH, getFinishedStrokeWidth());
         bundle.putFloat(INSTANCE_UNFINISHED_STROKE_WIDTH, getUnfinishedStrokeWidth());
+        bundle.putInt(INSTANCE_BACKGROUND_COLOR, getInnerBackgroundColor());
         return bundle;
     }
 
@@ -307,14 +320,15 @@ public class DonutProgress extends View {
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
+            finishedStrokeWidth = bundle.getFloat(INSTANCE_FINISHED_STROKE_WIDTH);
+            unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
+            innerBackgroundColor = bundle.getInt(INSTANCE_BACKGROUND_COLOR);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
             showText = bundle.getBoolean(INSTANCE_SHOW_TEXT);
-            finishedStrokeWidth = bundle.getFloat(INSTANCE_FINISHED_STROKE_WIDTH);
-            unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
             return;
         }

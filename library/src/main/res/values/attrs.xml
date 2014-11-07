@@ -13,6 +13,9 @@
         <attr name="circle_text_size" format="dimension"/>
         <attr name="circle_text_color" format="color"/>
 
+        <attr name="circle_prefix_text" format="string"/>
+        <attr name="circle_suffix_text" format="string"/>
+
         <attr name="circle_text_visibility" format="enum">
             <enum name="visible" value="0"/>
             <enum name="invisible" value="1"/>
@@ -32,6 +35,11 @@
         <attr name="donut_text_size" format="dimension"/>
         <attr name="donut_text_color" format="color"/>
 
+        <attr name="donut_prefix_text" format="string"/>
+        <attr name="donut_suffix_text" format="string"/>
+
+        <attr name="donut_background_color" format="color"/>
+
         <attr name="donut_text_visibility" format="enum">
             <enum name="visible" value="0"/>
             <enum name="invisible" value="1"/>
@@ -40,6 +48,7 @@
 
     <declare-styleable name="ArcProgress">
         <attr name="arc_progress" format="integer"/>
+        <attr name="arc_angle" format="float"/>
         <attr name="arc_stroke_width" format="dimension"/>
         <attr name="arc_max" format="integer"/>
 

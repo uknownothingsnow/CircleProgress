@@ -18,42 +18,35 @@ import android.view.View;
  * Created by bruce on 11/4/14.
  */
 public class CircleProgress extends View {
-    protected static final int PROGRESS_TEXT_VISIBLE = 0;
-    protected static final int PROGRESS_TEXT_INVISIBLE = 1;
+    private Paint textPaint;
 
-    protected Paint textPaint;
+    private float textSize;
+    private int textColor;
+    private int progress = 0;
+    private int max;
+    private boolean showText = true;
+    private int finishedColor;
+    private int unfinishedColor;
+    private String prefixText = "";
+    private String suffixText = "%";
 
-    protected float textSize;
-    protected int textColor;
-    protected int progress = 0;
-    protected int max;
-    protected boolean showText = true;
-    protected int finishedStrokeColor;
-    protected int unfinishedStrokeColor;
-    protected int default_finished_color = Color.rgb(66, 145, 241);
-    protected int default_unfinished_color = Color.rgb(204, 204, 204);
-    protected int default_text_color = Color.rgb(66, 145, 241);
-    protected int default_max = 100;
-    protected float default_text_size;
-    protected int min_size;
+    private final int default_finished_color = Color.rgb(66, 145, 241);
+    private final int default_unfinished_color = Color.rgb(204, 204, 204);
+    private final int default_text_color = Color.WHITE;
+    private final int default_max = 100;
+    private final float default_text_size;
+    private final int min_size;
 
-    protected String prefixText = "";
-    protected String suffixText = "%";
-
-    protected static final String INSTANCE_STATE = "saved_instance";
-    protected static final String INSTANCE_TEXT_COLOR = "text_color";
-    protected static final String INSTANCE_TEXT_SIZE = "text_size";
-    protected static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
-    protected static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
-    protected static final String INSTANCE_MAX = "max";
-    protected static final String INSTANCE_PROGRESS = "progress";
-    protected static final String INSTANCE_SUFFIX = "suffix";
-    protected static final String INSTANCE_PREFIX = "prefix";
-    protected static final String INSTANCE_SHOW_TEXT = "show_text";
-
-    public enum ProgressTextVisibility{
-        Visible,Invisible
-    };
+    private static final String INSTANCE_STATE = "saved_instance";
+    private static final String INSTANCE_TEXT_COLOR = "text_color";
+    private static final String INSTANCE_TEXT_SIZE = "text_size";
+    private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
+    private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
+    private static final String INSTANCE_MAX = "max";
+    private static final String INSTANCE_PROGRESS = "progress";
+    private static final String INSTANCE_SUFFIX = "suffix";
+    private static final String INSTANCE_PREFIX = "prefix";
+    private static final String INSTANCE_SHOW_TEXT = "show_text";
 
     private Paint paint = new Paint();
     private Path path = new Path();
@@ -69,7 +62,8 @@ public class CircleProgress extends View {
     public CircleProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        initConstants();
+        default_text_size = Utils.sp2px(getResources(), 18);
+        min_size = (int) Utils.dp2px(getResources(), 100);
 
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CircleProgress, defStyleAttr, 0);
         initByAttributes(attributes);
@@ -78,25 +72,26 @@ public class CircleProgress extends View {
         initPainters();
     }
 
-    protected void initConstants() {
-        default_text_size = Utils.sp2px(getResources(), 18);
-        default_text_color = Color.WHITE;
-        min_size = (int) Utils.dp2px(getResources(), 100);
-    }
-
     protected void initByAttributes(TypedArray attributes) {
-        finishedStrokeColor = attributes.getColor(R.styleable.CircleProgress_circle_finished_color, default_finished_color);
-        unfinishedStrokeColor = attributes.getColor(R.styleable.CircleProgress_circle_unfinished_color, default_unfinished_color);
+        finishedColor = attributes.getColor(R.styleable.CircleProgress_circle_finished_color, default_finished_color);
+        unfinishedColor = attributes.getColor(R.styleable.CircleProgress_circle_unfinished_color, default_unfinished_color);
         textColor = attributes.getColor(R.styleable.CircleProgress_circle_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.CircleProgress_circle_text_size, default_text_size);
 
-        int textVisible = attributes.getInt(R.styleable.CircleProgress_circle_text_visibility, PROGRESS_TEXT_VISIBLE);
-        if(textVisible != PROGRESS_TEXT_VISIBLE){
+        int textVisible = attributes.getInt(R.styleable.CircleProgress_circle_text_visibility, ProgressTextVisibility.Visible.ordinal());
+        if(textVisible != ProgressTextVisibility.Visible.ordinal()){
             showText = false;
         }
 
         setMax(attributes.getInt(R.styleable.CircleProgress_circle_max, default_max));
         setProgress(attributes.getInt(R.styleable.CircleProgress_circle_progress, 0));
+
+        if (attributes.getString(R.styleable.CircleProgress_circle_prefix_text) != null) {
+            setPrefixText(attributes.getString(R.styleable.CircleProgress_circle_prefix_text));
+        }
+        if (attributes.getString(R.styleable.CircleProgress_circle_suffix_text) != null) {
+            setSuffixText(attributes.getString(R.styleable.CircleProgress_circle_suffix_text));
+        }
     }
 
     protected void initPainters() {
@@ -145,20 +140,36 @@ public class CircleProgress extends View {
         this.textColor = textColor;
     }
 
-    public int getFinishedStrokeColor() {
-        return finishedStrokeColor;
+    public int getFinishedColor() {
+        return finishedColor;
     }
 
-    public int getUnfinishedStrokeColor() {
-        return unfinishedStrokeColor;
+    public void setFinishedColor(int finishedColor) {
+        this.finishedColor = finishedColor;
+    }
+
+    public int getUnfinishedColor() {
+        return unfinishedColor;
+    }
+
+    public void setUnfinishedColor(int unfinishedColor) {
+        this.unfinishedColor = unfinishedColor;
     }
 
     public String getPrefixText() {
         return prefixText;
     }
 
+    public void setPrefixText(String prefixText) {
+        this.prefixText = prefixText;
+    }
+
     public String getSuffixText() {
         return suffixText;
+    }
+
+    public void setSuffixText(String suffixText) {
+        this.suffixText = suffixText;
     }
 
     public String getDrawText() {
@@ -189,11 +200,11 @@ public class CircleProgress extends View {
         }
 
         canvas.clipPath(path, Region.Op.INTERSECT);
-        paint.setColor(getUnfinishedStrokeColor());
+        paint.setColor(getUnfinishedColor());
         canvas.drawCircle(getWidth()/2, getHeight()/2, getWidth()/2, paint);
 
         canvas.clipPath(path, Region.Op.INTERSECT);
-        paint.setColor(getFinishedStrokeColor());
+        paint.setColor(getFinishedColor());
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(0, getHeight() * (1 - getProgressPercentage()), getWidth(), getHeight(), paint);
 
@@ -208,8 +219,8 @@ public class CircleProgress extends View {
         bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
         bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
         bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
-        bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
-        bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
+        bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedColor());
+        bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedColor());
         bundle.putInt(INSTANCE_MAX, getMax());
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
@@ -224,8 +235,8 @@ public class CircleProgress extends View {
             final Bundle bundle = (Bundle) state;
             textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
-            finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
-            unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
+            finishedColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
+            unfinishedColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
