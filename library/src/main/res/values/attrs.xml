@@ -15,11 +15,6 @@
 
         <attr name="circle_prefix_text" format="string"/>
         <attr name="circle_suffix_text" format="string"/>
-
-        <attr name="circle_text_visibility" format="enum">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="DonutProgress">
@@ -39,11 +34,6 @@
         <attr name="donut_suffix_text" format="string"/>
 
         <attr name="donut_background_color" format="color"/>
-
-        <attr name="donut_text_visibility" format="enum">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="ArcProgress">
@@ -61,25 +51,11 @@
         <attr name="arc_suffix_text" format="string"/>
         <attr name="arc_suffix_text_size" format="dimension"/>
         <attr name="arc_suffix_text_color" format="color"/>
+        <attr name="arc_suffix_text_padding" format="dimension"/>
 
         <attr name="arc_bottom_text" format="string"/>
         <attr name="arc_bottom_text_size" format="dimension"/>
         <attr name="arc_bottom_text_color" format="color"/>
-
-        <attr name="arc_text_visibility" format="enum">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
-        </attr>
-
-        <attr name="arc_suffix_text_visibility" format="enum">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
-        </attr>
-
-        <attr name="arc_bottom_text_visibility" format="enum">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="Themes">

@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -24,7 +25,6 @@ public class CircleProgress extends View {
     private int textColor;
     private int progress = 0;
     private int max;
-    private boolean showText = true;
     private int finishedColor;
     private int unfinishedColor;
     private String prefixText = "";
@@ -46,7 +46,6 @@ public class CircleProgress extends View {
     private static final String INSTANCE_PROGRESS = "progress";
     private static final String INSTANCE_SUFFIX = "suffix";
     private static final String INSTANCE_PREFIX = "prefix";
-    private static final String INSTANCE_SHOW_TEXT = "show_text";
 
     private Paint paint = new Paint();
     private Path path = new Path();
@@ -77,11 +76,6 @@ public class CircleProgress extends View {
         unfinishedColor = attributes.getColor(R.styleable.CircleProgress_circle_unfinished_color, default_unfinished_color);
         textColor = attributes.getColor(R.styleable.CircleProgress_circle_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.CircleProgress_circle_text_size, default_text_size);
-
-        int textVisible = attributes.getInt(R.styleable.CircleProgress_circle_text_visibility, ProgressTextVisibility.Visible.ordinal());
-        if(textVisible != ProgressTextVisibility.Visible.ordinal()){
-            showText = false;
-        }
 
         setMax(attributes.getInt(R.styleable.CircleProgress_circle_max, default_max));
         setProgress(attributes.getInt(R.styleable.CircleProgress_circle_progress, 0));
@@ -176,19 +170,6 @@ public class CircleProgress extends View {
         return getPrefixText() + getProgress() + getSuffixText();
     }
 
-    public void setTextVisibility(ProgressTextVisibility visibility) {
-        if (visibility == ProgressTextVisibility.Invisible) {
-            showText = false;
-        } else {
-            showText = true;
-        }
-        invalidate();
-    }
-
-    public ProgressTextVisibility getTextVisibility() {
-        return showText ? ProgressTextVisibility.Visible : ProgressTextVisibility.Invisible;
-    }
-
     @Override
     protected int getSuggestedMinimumHeight() {
         return min_size;
@@ -222,8 +203,10 @@ public class CircleProgress extends View {
         canvas.drawRect(0, getHeight() * (1 - getProgressPercentage()), getWidth(), getHeight(), paint);
 
         String text = getDrawText();
-        float textHeight = textPaint.descent() + textPaint.ascent();
-        canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
+        if (!TextUtils.isEmpty(text)) {
+            float textHeight = textPaint.descent() + textPaint.ascent();
+            canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
+        }
     }
 
     @Override
@@ -238,7 +221,6 @@ public class CircleProgress extends View {
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
-        bundle.putBoolean(INSTANCE_SHOW_TEXT, showText);
         return bundle;
     }
 
@@ -255,7 +237,6 @@ public class CircleProgress extends View {
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
-            showText = bundle.getBoolean(INSTANCE_SHOW_TEXT);
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
             return;
         }

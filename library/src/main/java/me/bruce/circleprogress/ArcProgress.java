@@ -30,11 +30,11 @@ public class ArcProgress extends View {
     private int textColor;
     private int progress = 0;
     private int max;
-    private boolean showText = true;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
     private float arcAngle;
-    protected String suffixText = "%";
+    private String suffixText = "%";
+    private float suffixTextPadding;
 
     private final int default_finished_color = Color.WHITE;
     private final int default_unfinished_color = Color.rgb(72, 106, 176);
@@ -52,13 +52,13 @@ public class ArcProgress extends View {
     private static final String INSTANCE_STATE = "saved_instance";
     private static final String INSTANCE_STROKE_WIDTH = "stroke_width";
     private static final String INSTANCE_SUFFIX_TEXT_SIZE = "suffix_text_size";
+    private static final String INSTANCE_SUFFIX_TEXT_PADDING = "suffix_text_padding";
     private static final String INSTANCE_BOTTOM_TEXT_SIZE = "bottom_text_size";
     private static final String INSTANCE_BOTTOM_TEXT = "bottom_text";
     private static final String INSTANCE_TEXT_SIZE = "text_size";
     private static final String INSTANCE_TEXT_COLOR = "text_color";
     private static final String INSTANCE_PROGRESS = "progress";
     private static final String INSTANCE_MAX = "max";
-    private static final String INSTANCE_SHOW_TEXT = "show_text";
     private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
     private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
     private static final String INSTANCE_ARC_ANGLE = "arc_angle";
@@ -97,17 +97,12 @@ public class ArcProgress extends View {
         textColor = attributes.getColor(R.styleable.ArcProgress_arc_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.ArcProgress_arc_text_size, default_text_size);
         arcAngle = attributes.getDimension(R.styleable.ArcProgress_arc_angle, default_arc_angle);
-
-        int textVisible = attributes.getInt(R.styleable.ArcProgress_arc_text_visibility, ProgressTextVisibility.Visible.ordinal());
-        if(textVisible != ProgressTextVisibility.Visible.ordinal()){
-            showText = false;
-        }
-
         setMax(attributes.getInt(R.styleable.ArcProgress_arc_max, default_max));
         setProgress(attributes.getInt(R.styleable.ArcProgress_arc_progress, 0));
         strokeWidth = attributes.getDimension(R.styleable.ArcProgress_arc_stroke_width, default_stroke_width);
         suffixTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_size, default_suffix_text_size);
         suffixText = TextUtils.isEmpty(attributes.getString(R.styleable.ArcProgress_arc_suffix_text)) ? default_suffix_text : attributes.getString(R.styleable.ArcProgress_arc_suffix_text);
+        suffixTextPadding = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_padding, default_suffix_padding);
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
     }
@@ -229,17 +224,12 @@ public class ArcProgress extends View {
         this.suffixText = suffixText;
     }
 
-    public void setTextVisibility(ProgressTextVisibility visibility) {
-        if (visibility == ProgressTextVisibility.Invisible) {
-            showText = false;
-        } else {
-            showText = true;
-        }
-        invalidate();
+    public float getSuffixTextPadding() {
+        return suffixTextPadding;
     }
 
-    public ProgressTextVisibility getTextVisibility() {
-        return showText ? ProgressTextVisibility.Visible : ProgressTextVisibility.Invisible;
+    public void setSuffixTextPadding(float suffixTextPadding) {
+        this.suffixTextPadding = suffixTextPadding;
     }
 
     @Override
@@ -271,20 +261,22 @@ public class ArcProgress extends View {
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
         String text = String.valueOf(getProgress());
-        String suffix = "%";
-        textPaint.setColor(textColor);
-        textPaint.setTextSize(textSize);
-        float textHeight = textPaint.descent() + textPaint.ascent();
-        float textBaseline = (getHeight() - textHeight) / 2.0f;
-        canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, textBaseline, textPaint);
+        if (!TextUtils.isEmpty(text)) {
+            textPaint.setColor(textColor);
+            textPaint.setTextSize(textSize);
+            float textHeight = textPaint.descent() + textPaint.ascent();
+            float textBaseline = (getHeight() - textHeight) / 2.0f;
+            canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, textBaseline, textPaint);
+            textPaint.setTextSize(suffixTextSize);
+            float suffixHeight = textPaint.descent() + textPaint.ascent();
+            canvas.drawText(suffixText, getWidth() / 2.0f  + textPaint.measureText(text) + suffixTextPadding, textBaseline + textHeight - suffixHeight, textPaint);
+        }
 
-        textPaint.setTextSize(suffixTextSize);
-        float suffixHeight = textPaint.descent() + textPaint.ascent();
-        canvas.drawText(suffix, (getWidth() + textPaint.measureText(text)) / 2.0f + suffixTextSize, textBaseline + textHeight - suffixHeight, textPaint);
-
-        textPaint.setTextSize(bottomTextSize);
-        float bottomTextBaseline = getHeight() - (float) Math.tan(15/180f*Math.PI) * getWidth() / 2 - (textPaint.descent() + textPaint.ascent());
-        canvas.drawText(getBottomText(), (getWidth() - textPaint.measureText(getBottomText())) / 2.0f, bottomTextBaseline, textPaint);
+        if (!TextUtils.isEmpty(getBottomText())) {
+            textPaint.setTextSize(bottomTextSize);
+            float bottomTextBaseline = getHeight() - (float) Math.tan(15 / 180f * Math.PI) * getWidth() / 2 - (textPaint.descent() + textPaint.ascent());
+            canvas.drawText(getBottomText(), (getWidth() - textPaint.measureText(getBottomText())) / 2.0f, bottomTextBaseline, textPaint);
+        }
     }
 
     @Override
@@ -293,13 +285,13 @@ public class ArcProgress extends View {
         bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
         bundle.putFloat(INSTANCE_STROKE_WIDTH, getStrokeWidth());
         bundle.putFloat(INSTANCE_SUFFIX_TEXT_SIZE, getSuffixTextSize());
+        bundle.putFloat(INSTANCE_SUFFIX_TEXT_PADDING, getSuffixTextPadding());
         bundle.putFloat(INSTANCE_BOTTOM_TEXT_SIZE, getBottomTextSize());
         bundle.putString(INSTANCE_BOTTOM_TEXT, getBottomText());
         bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
         bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putInt(INSTANCE_MAX, getMax());
-        bundle.putBoolean(INSTANCE_SHOW_TEXT, showText);
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
         bundle.putFloat(INSTANCE_ARC_ANGLE, getArcAngle());
@@ -313,13 +305,13 @@ public class ArcProgress extends View {
             final Bundle bundle = (Bundle) state;
             strokeWidth = bundle.getFloat(INSTANCE_STROKE_WIDTH);
             suffixTextSize = bundle.getFloat(INSTANCE_SUFFIX_TEXT_SIZE);
+            suffixTextPadding = bundle.getFloat(INSTANCE_SUFFIX_TEXT_PADDING);
             bottomTextSize = bundle.getFloat(INSTANCE_BOTTOM_TEXT_SIZE);
             bottomText = bundle.getString(INSTANCE_BOTTOM_TEXT);
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
             textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
             setMax(bundle.getInt(INSTANCE_MAX));
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
-            showText = bundle.getBoolean(INSTANCE_SHOW_TEXT);
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
             suffixText = bundle.getString(INSTANCE_SUFFIX);

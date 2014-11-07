@@ -9,6 +9,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -28,7 +29,6 @@ public class DonutProgress extends View {
     private int textColor;
     private int progress = 0;
     private int max;
-    private boolean showText = true;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
     private float finishedStrokeWidth;
@@ -55,7 +55,6 @@ public class DonutProgress extends View {
     private static final String INSTANCE_PROGRESS = "progress";
     private static final String INSTANCE_SUFFIX = "suffix";
     private static final String INSTANCE_PREFIX = "prefix";
-    private static final String INSTANCE_SHOW_TEXT = "show_text";
     private static final String INSTANCE_FINISHED_STROKE_WIDTH = "finished_stroke_width";
     private static final String INSTANCE_UNFINISHED_STROKE_WIDTH = "unfinished_stroke_width";
     private static final String INSTANCE_BACKGROUND_COLOR = "inner_background_color";
@@ -110,11 +109,6 @@ public class DonutProgress extends View {
         unfinishedStrokeColor = attributes.getColor(R.styleable.DonutProgress_donut_unfinished_color, default_unfinished_color);
         textColor = attributes.getColor(R.styleable.DonutProgress_donut_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.DonutProgress_donut_text_size, default_text_size);
-
-        int textVisible = attributes.getInt(R.styleable.DonutProgress_donut_text_visibility, ProgressTextVisibility.Visible.ordinal());
-        if(textVisible != ProgressTextVisibility.Visible.ordinal()){
-            showText = false;
-        }
 
         setMax(attributes.getInt(R.styleable.DonutProgress_donut_max, default_max));
         setProgress(attributes.getInt(R.styleable.DonutProgress_donut_progress, 0));
@@ -188,14 +182,6 @@ public class DonutProgress extends View {
         this.textColor = textColor;
     }
 
-    public boolean isShowText() {
-        return showText;
-    }
-
-    public void setShowText(boolean showText) {
-        this.showText = showText;
-    }
-
     public int getFinishedStrokeColor() {
         return finishedStrokeColor;
     }
@@ -234,19 +220,6 @@ public class DonutProgress extends View {
 
     public void setInnerBackgroundColor(int innerBackgroundColor) {
         this.innerBackgroundColor = innerBackgroundColor;
-    }
-
-    public void setTextVisibility(ProgressTextVisibility visibility) {
-        if (visibility == ProgressTextVisibility.Invisible) {
-            showText = false;
-        } else {
-            showText = true;
-        }
-        invalidate();
-    }
-
-    public ProgressTextVisibility getTextVisibility() {
-        return showText ? ProgressTextVisibility.Visible : ProgressTextVisibility.Invisible;
     }
 
     @Override
@@ -299,8 +272,8 @@ public class DonutProgress extends View {
         canvas.drawArc(finishedOuterRect, 0, getProgressAngle(), false, finishedPaint);
         canvas.drawArc(unfinishedOuterRect, getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
-        if (showText) {
-            String text = prefixText + progress + suffixText;
+        String text = prefixText + progress + suffixText;
+        if (!TextUtils.isEmpty(text)) {
             float textHeight = textPaint.descent() + textPaint.ascent();
             canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
         }
@@ -318,7 +291,6 @@ public class DonutProgress extends View {
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
-        bundle.putBoolean(INSTANCE_SHOW_TEXT, showText);
         bundle.putFloat(INSTANCE_FINISHED_STROKE_WIDTH, getFinishedStrokeWidth());
         bundle.putFloat(INSTANCE_UNFINISHED_STROKE_WIDTH, getUnfinishedStrokeWidth());
         bundle.putInt(INSTANCE_BACKGROUND_COLOR, getInnerBackgroundColor());
@@ -341,7 +313,6 @@ public class DonutProgress extends View {
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
-            showText = bundle.getBoolean(INSTANCE_SHOW_TEXT);
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
             return;
         }
