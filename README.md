@@ -9,7 +9,7 @@ inspired from
 甜甜圈效果
 
 ```xml
-<me.bruce.circleprogress.DonutProgress
+<com.github.lzyzsd.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@ inspired from
 填充圆圈的效果
 
 ```xml
-<me.bruce.circleprogress.CircleProgress
+<com.github.lzyzsd.circleprogress.CircleProgress
             android:layout_marginLeft="50dp"
             android:layout_width="100dp"
             android:layout_height="100dp"

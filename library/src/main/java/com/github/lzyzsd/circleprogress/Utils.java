@@ -1,4 +1,4 @@
-package me.bruce.circleprogress;
+package com.github.lzyzsd.circleprogress;
 
 import android.content.res.Resources;
 

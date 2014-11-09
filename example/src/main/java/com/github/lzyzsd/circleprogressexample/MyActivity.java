@@ -1,4 +1,4 @@
-package me.bruce.circleprogress.example;
+package com.github.lzyzsd.circleprogressexample;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -6,10 +6,9 @@ import android.os.Bundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import me.bruce.circleprogress.ArcProgress;
-import me.bruce.circleprogress.CircleProgress;
-import me.bruce.circleprogress.DonutProgress;
-
+import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 public class MyActivity extends ActionBarActivity {
     private Timer timer;
