@@ -1,6 +1,8 @@
 inspired from
 [https://github.com/daimajia/NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 
+and CleanMaster
+
 ![CleanMaster](http://i.stack.imgur.com/sZP5t.png)
 
 ###Demo
