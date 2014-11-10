@@ -7,9 +7,6 @@
         <attr name="circle_unfinished_color" format="color"/>
         <attr name="circle_finished_color" format="color"/>
 
-        <attr name="circle_finished_stroke_width" format="dimension"/>
-        <attr name="circle_unfinished_stroke_width" format="dimension"/>
-
         <attr name="circle_text_size" format="dimension"/>
         <attr name="circle_text_color" format="color"/>
 
@@ -50,12 +47,10 @@
 
         <attr name="arc_suffix_text" format="string"/>
         <attr name="arc_suffix_text_size" format="dimension"/>
-        <attr name="arc_suffix_text_color" format="color"/>
         <attr name="arc_suffix_text_padding" format="dimension"/>
 
         <attr name="arc_bottom_text" format="string"/>
         <attr name="arc_bottom_text_size" format="dimension"/>
-        <attr name="arc_bottom_text_color" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="Themes">
