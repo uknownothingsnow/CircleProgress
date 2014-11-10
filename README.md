@@ -9,7 +9,9 @@ and CleanMaster
 
 ![CircleProgress](https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/circle_progress.gif)
 
-3 kinds of progress view are provided, DonutProgress, CircleProgress, ArcProgress
+###Demo download [link](https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/example.apk)
+
+###3 kinds of progress view are provided, DonutProgress, CircleProgress, ArcProgress
 
 ##Usage
 DonutProgress
@@ -47,15 +49,11 @@ CircleProgress
 
 ```xml
     <com.github.lzyzsd.circleprogress.CircleProgress
+        android:id="@+id/circle_progress"
         android:layout_marginLeft="50dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        custom:circle_progress="25"
-        custom:circle_finished_color="#ff0000"
-        custom:circle_unfinished_color="#00ff00"
-        custom:circle_text_color="#ffffff"
-        custom:circle_suffix_text="$"
-        custom:circle_text_size="16sp"/>
+        custom:circle_progress="20"/>
 ```
 
 ![CircleProgress](https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/circleprogress_demo.png)
@@ -79,16 +77,13 @@ ArcProgress
 
 ```xml
     <com.github.lzyzsd.circleprogress.ArcProgress
+        android:id="@+id/arc_progress"
         android:background="#214193"
         android:layout_marginLeft="50dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        custom:arc_progress="30"
-        custom:arc_bottom_text="STORAGE"
-        custom:arc_finished_color="#ffffff"
-        custom:arc_unfinished_color="#ff0000"
-        custom:arc_suffix_text="#"
-        custom:arc_text_color="#ffffff"/>
+        custom:arc_progress="55"
+        custom:arc_bottom_text="MEMORY"/>
 ```
 
 ![ArcProgress](https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/arcprogress_demo.png)
