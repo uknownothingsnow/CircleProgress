@@ -14,6 +14,30 @@ and CleanMaster
 ###3 kinds of progress view are provided, DonutProgress, CircleProgress, ArcProgress
 
 ##Usage
+
+###Gradle
+
+```groovy
+dependencies {
+    compile 'com.github.lzyzsd:circleprogress:1.0.0@aar'
+}
+```
+
+###Maven
+
+```xml
+<dependency>
+    <groupId>com.github.lzyzsd</groupId>
+    <artifactId>circleprogress</artifactId>
+    <version>1.0.0</version>
+    <type>apklib</type>
+</dependency>
+```
+
+###Notice
+
+please always use same width and height for progress views
+
 DonutProgress
 
 ```xml
