@@ -139,3 +139,5 @@ run `./gradlew assembleDebug` (Mac/Linux)
 or
 
 run `gradlew.bat assembleDebug` (Windows)
+
+![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-CircleProgress-brightgreen.svg?style=flat)%5D(https://android-arsenal.com/details/1/1130)
