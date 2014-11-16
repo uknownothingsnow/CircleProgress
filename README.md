@@ -1,3 +1,5 @@
+[![Android Arsenal](https://img.shields.io/badge/Android+Arsenal-CircleProgress-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1130)
+
 inspired from
 [https://github.com/daimajia/NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 
@@ -139,5 +141,3 @@ run `./gradlew assembleDebug` (Mac/Linux)
 or
 
 run `gradlew.bat assembleDebug` (Windows)
-
-![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-CircleProgress-brightgreen.svg?style=flat)%5D(https://android-arsenal.com/details/1/1130)
