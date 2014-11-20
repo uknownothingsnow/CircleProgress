@@ -16,7 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.github.lzyzsd.circleprogress.ArcProgress;
 
 
 public class ViewPagerActivity extends ActionBarActivity {
@@ -127,6 +130,14 @@ public class ViewPagerActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_view_pager, container, false);
+            final ArcProgress arcProgress = (ArcProgress) rootView.findViewById(R.id.arc_progress);
+            arcProgress.setProgress(20);
+            ((Button) rootView.findViewById(R.id.button_increase)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    arcProgress.setProgress(arcProgress.getProgress() + 1);
+                }
+            });
             return rootView;
         }
     }

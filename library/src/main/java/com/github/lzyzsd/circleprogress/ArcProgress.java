@@ -123,12 +123,19 @@ public class ArcProgress extends View {
         paint.setStrokeCap(Paint.Cap.ROUND);
     }
 
+    @Override
+    public void invalidate() {
+        initPainters();
+        super.invalidate();
+    }
+
     public float getStrokeWidth() {
         return strokeWidth;
     }
 
     public void setStrokeWidth(float strokeWidth) {
         this.strokeWidth = strokeWidth;
+        this.invalidate();
     }
 
     public float getSuffixTextSize() {
@@ -137,6 +144,7 @@ public class ArcProgress extends View {
 
     public void setSuffixTextSize(float suffixTextSize) {
         this.suffixTextSize = suffixTextSize;
+        this.invalidate();
     }
 
     public String getBottomText() {
@@ -145,6 +153,7 @@ public class ArcProgress extends View {
 
     public void setBottomText(String bottomText) {
         this.bottomText = bottomText;
+        this.invalidate();
     }
 
     public int getProgress() {
@@ -176,6 +185,7 @@ public class ArcProgress extends View {
 
     public void setBottomTextSize(float bottomTextSize) {
         this.bottomTextSize = bottomTextSize;
+        this.invalidate();
     }
 
     public float getTextSize() {
@@ -184,6 +194,7 @@ public class ArcProgress extends View {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
+        this.invalidate();
     }
 
     public int getTextColor() {
@@ -192,6 +203,7 @@ public class ArcProgress extends View {
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+        this.invalidate();
     }
 
     public int getFinishedStrokeColor() {
@@ -200,6 +212,7 @@ public class ArcProgress extends View {
 
     public void setFinishedStrokeColor(int finishedStrokeColor) {
         this.finishedStrokeColor = finishedStrokeColor;
+        this.invalidate();
     }
 
     public int getUnfinishedStrokeColor() {
@@ -208,6 +221,7 @@ public class ArcProgress extends View {
 
     public void setUnfinishedStrokeColor(int unfinishedStrokeColor) {
         this.unfinishedStrokeColor = unfinishedStrokeColor;
+        this.invalidate();
     }
 
     public float getArcAngle() {
@@ -216,6 +230,7 @@ public class ArcProgress extends View {
 
     public void setArcAngle(float arcAngle) {
         this.arcAngle = arcAngle;
+        this.invalidate();
     }
 
     public String getSuffixText() {
@@ -224,6 +239,7 @@ public class ArcProgress extends View {
 
     public void setSuffixText(String suffixText) {
         this.suffixText = suffixText;
+        this.invalidate();
     }
 
     public float getSuffixTextPadding() {
@@ -232,6 +248,7 @@ public class ArcProgress extends View {
 
     public void setSuffixTextPadding(float suffixTextPadding) {
         this.suffixTextPadding = suffixTextPadding;
+        this.invalidate();
     }
 
     @Override

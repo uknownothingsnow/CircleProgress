@@ -123,12 +123,19 @@ public class DonutProgress extends View {
         innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
     }
 
+    @Override
+    public void invalidate() {
+        initPainters();
+        super.invalidate();
+    }
+
     public float getFinishedStrokeWidth() {
         return finishedStrokeWidth;
     }
 
     public void setFinishedStrokeWidth(float finishedStrokeWidth) {
         this.finishedStrokeWidth = finishedStrokeWidth;
+        this.invalidate();
     }
 
     public float getUnfinishedStrokeWidth() {
@@ -137,6 +144,7 @@ public class DonutProgress extends View {
 
     public void setUnfinishedStrokeWidth(float unfinishedStrokeWidth) {
         this.unfinishedStrokeWidth = unfinishedStrokeWidth;
+        this.invalidate();
     }
 
     private float getProgressAngle() {
@@ -172,6 +180,7 @@ public class DonutProgress extends View {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
+        this.invalidate();
     }
 
     public int getTextColor() {
@@ -180,6 +189,7 @@ public class DonutProgress extends View {
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+        this.invalidate();
     }
 
     public int getFinishedStrokeColor() {
@@ -188,6 +198,7 @@ public class DonutProgress extends View {
 
     public void setFinishedStrokeColor(int finishedStrokeColor) {
         this.finishedStrokeColor = finishedStrokeColor;
+        this.invalidate();
     }
 
     public int getUnfinishedStrokeColor() {
@@ -196,6 +207,7 @@ public class DonutProgress extends View {
 
     public void setUnfinishedStrokeColor(int unfinishedStrokeColor) {
         this.unfinishedStrokeColor = unfinishedStrokeColor;
+        this.invalidate();
     }
 
     public String getSuffixText() {
@@ -204,6 +216,7 @@ public class DonutProgress extends View {
 
     public void setSuffixText(String suffixText) {
         this.suffixText = suffixText;
+        this.invalidate();
     }
 
     public String getPrefixText() {
@@ -212,6 +225,7 @@ public class DonutProgress extends View {
 
     public void setPrefixText(String prefixText) {
         this.prefixText = prefixText;
+        this.invalidate();
     }
 
     public int getInnerBackgroundColor() {
@@ -220,6 +234,7 @@ public class DonutProgress extends View {
 
     public void setInnerBackgroundColor(int innerBackgroundColor) {
         this.innerBackgroundColor = innerBackgroundColor;
+        this.invalidate();
     }
 
     @Override

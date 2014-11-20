@@ -95,6 +95,12 @@ public class CircleProgress extends View {
         paint.setAntiAlias(true);
     }
 
+    @Override
+    public void invalidate() {
+        initPainters();
+        super.invalidate();
+    }
+
     public int getProgress() {
         return progress;
     }
@@ -124,6 +130,7 @@ public class CircleProgress extends View {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
+        this.invalidate();
     }
 
     public int getTextColor() {
@@ -132,6 +139,7 @@ public class CircleProgress extends View {
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+        this.invalidate();
     }
 
     public int getFinishedColor() {
@@ -140,6 +148,7 @@ public class CircleProgress extends View {
 
     public void setFinishedColor(int finishedColor) {
         this.finishedColor = finishedColor;
+        this.invalidate();
     }
 
     public int getUnfinishedColor() {
@@ -148,6 +157,7 @@ public class CircleProgress extends View {
 
     public void setUnfinishedColor(int unfinishedColor) {
         this.unfinishedColor = unfinishedColor;
+        this.invalidate();
     }
 
     public String getPrefixText() {
@@ -156,6 +166,7 @@ public class CircleProgress extends View {
 
     public void setPrefixText(String prefixText) {
         this.prefixText = prefixText;
+        this.invalidate();
     }
 
     public String getSuffixText() {
@@ -164,6 +175,7 @@ public class CircleProgress extends View {
 
     public void setSuffixText(String suffixText) {
         this.suffixText = suffixText;
+        this.invalidate();
     }
 
     public String getDrawText() {
