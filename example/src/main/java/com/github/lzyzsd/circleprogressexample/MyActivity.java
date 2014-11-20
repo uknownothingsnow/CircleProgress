@@ -1,7 +1,10 @@
 package com.github.lzyzsd.circleprogressexample;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,5 +47,21 @@ public class MyActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.my, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_viewpager:
+                startActivity(new Intent(this, ViewPagerActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

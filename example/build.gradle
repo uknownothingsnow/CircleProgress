@@ -21,4 +21,5 @@ android {
 dependencies {
     compile project(':library')
     compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 }

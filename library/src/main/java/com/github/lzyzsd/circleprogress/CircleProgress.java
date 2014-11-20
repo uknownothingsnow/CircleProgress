@@ -186,8 +186,7 @@ public class CircleProgress extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        rectF.set(0, 0, getWidth(), getHeight());
+        rectF.set(0, 0, MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec));
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 
