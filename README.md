@@ -21,7 +21,7 @@ and CleanMaster
 
 ```groovy
 dependencies {
-    compile 'com.github.lzyzsd:circleprogress:1.0.0@aar'
+    compile 'com.github.lzyzsd:circleprogress:x.x.x@aar'
 }
 ```
 
