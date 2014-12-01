@@ -4,9 +4,12 @@
     <string name="app_name">CircleProgress</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_viewpager">ViewPager</string>
+    <string name="action_list">List</string>
     <string name="title_activity_view_pager">ViewPagerActivity</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 
 </resources>

@@ -11,7 +11,9 @@
         android:id="@+id/arc_progress"
         android:layout_centerInParent="true"
         android:layout_width="200dp"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        custom:arc_bottom_text="RAM"
+        custom:arc_bottom_text_size="40sp"/>
 
     <Button
         android:id="@+id/button_increase"

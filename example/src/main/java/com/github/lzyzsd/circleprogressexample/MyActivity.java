@@ -61,6 +61,9 @@ public class MyActivity extends ActionBarActivity {
             case R.id.action_viewpager:
                 startActivity(new Intent(this, ViewPagerActivity.class));
                 return true;
+            case R.id.action_list:
+                startActivity(new Intent(this, ItemListActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
