@@ -21,7 +21,7 @@ and CleanMaster
 
 ```groovy
 dependencies {
-    compile 'com.github.lzyzsd:circleprogress:1.0.0@aar'
+    compile 'com.github.lzyzsd:circleprogress:1.0.1@aar'
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 <dependency>
     <groupId>com.github.lzyzsd</groupId>
     <artifactId>circleprogress</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <type>apklib</type>
 </dependency>
 ```
