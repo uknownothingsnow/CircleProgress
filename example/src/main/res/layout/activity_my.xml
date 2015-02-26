@@ -16,13 +16,10 @@
             android:id="@+id/donut_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             custom:donut_progress="30"
-            custom:donut_inner_bottom_text="bubu"
+            custom:donut_inner_bottom_text="MEMORY"
             custom:donut_inner_bottom_text_size="10dp"/>
-=======
-            custom:donut_progress="30"/>
->>>>>>> origin/master
+
 
         <com.github.lzyzsd.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
