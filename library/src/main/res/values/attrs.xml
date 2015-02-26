@@ -31,6 +31,10 @@
         <attr name="donut_suffix_text" format="string"/>
 
         <attr name="donut_background_color" format="color"/>
+
+        <attr name="donut_inner_bottom_text" format="string"/>
+        <attr name="donut_inner_bottom_text_size" format="dimension"/>
+
     </declare-styleable>
 
     <declare-styleable name="ArcProgress">
