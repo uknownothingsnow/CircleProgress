@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="#F5F5F5">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@android:id/text1"
+              android:layout_width="200dp"
+              android:layout_height="96dp"
+              android:gravity="center_vertical"/>
+
+    <com.github.lzyzsd.circleprogress.ArcProgress
+        android:layout_alignParentRight="true"
+        android:id="@+id/arc_progress"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:background="@android:color/transparent"
+        custom:arc_finished_color="#214193"
+        custom:arc_unfinished_color="#F2EDFF"
+        custom:arc_max="99"
+        custom:arc_bottom_text="Дист."
+        custom:arc_suffix_text="км"/>
+
+</LinearLayout>
