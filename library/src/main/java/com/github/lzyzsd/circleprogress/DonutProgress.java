@@ -36,9 +36,12 @@ public class DonutProgress extends View {
     private int innerBackgroundColor;
     private String prefixText = "";
     private String suffixText = "%";
+<<<<<<< HEAD
     private float innerBottomTextSize;
     private String innerBottomText;
     private float innerBottomTextHeight;
+=======
+>>>>>>> origin/master
 
     private final float default_stroke_width;
     private final int default_finished_color = Color.rgb(66, 145, 241);
@@ -47,6 +50,7 @@ public class DonutProgress extends View {
     private final int default_inner_background_color = Color.TRANSPARENT;
     private final int default_max = 100;
     private final float default_text_size;
+<<<<<<< HEAD
     private final float default_inner_bottom_text_size;
     private final int min_size;
 
@@ -56,6 +60,13 @@ public class DonutProgress extends View {
     private static final String INSTANCE_TEXT_SIZE = "text_size";
     private static final String INSTANCE_INNER_BOTTOM_TEXT_SIZE = "inner_bottom_text_size";
     private static final String INSTANCE_INNER_BOTTOM_TEXT = "inner_bottom_text";
+=======
+    private final int min_size;
+
+    private static final String INSTANCE_STATE = "saved_instance";
+    private static final String INSTANCE_TEXT_COLOR = "text_color";
+    private static final String INSTANCE_TEXT_SIZE = "text_size";
+>>>>>>> origin/master
     private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
     private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
     private static final String INSTANCE_MAX = "max";
@@ -80,7 +91,10 @@ public class DonutProgress extends View {
         default_text_size = Utils.sp2px(getResources(), 18);
         min_size = (int) Utils.dp2px(getResources(), 100);
         default_stroke_width = Utils.dp2px(getResources(), 10);
+<<<<<<< HEAD
         default_inner_bottom_text_size = Utils.sp2px(getResources(), 10);
+=======
+>>>>>>> origin/master
 
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DonutProgress, defStyleAttr, 0);
         initByAttributes(attributes);
@@ -129,8 +143,11 @@ public class DonutProgress extends View {
             suffixText = attributes.getString(R.styleable.DonutProgress_donut_suffix_text);
         }
         innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
+<<<<<<< HEAD
         innerBottomTextSize = attributes.getDimension(R.styleable.DonutProgress_donut_inner_bottom_text_size, default_inner_bottom_text_size);
         innerBottomText = attributes.getString(R.styleable.DonutProgress_donut_inner_bottom_text);
+=======
+>>>>>>> origin/master
     }
 
     @Override
@@ -247,6 +264,7 @@ public class DonutProgress extends View {
         this.invalidate();
     }
 
+<<<<<<< HEAD
 
     public String getInnerBottomText() {
         return innerBottomText;
@@ -275,6 +293,11 @@ public class DonutProgress extends View {
 
         //TODO calculate inner circle height and then position bottom text at the bottom (3/4)
         innerBottomTextHeight = getHeight() - (getHeight()*3) /4 ;
+=======
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
+>>>>>>> origin/master
     }
 
     private int measure(int measureSpec){
@@ -327,6 +350,7 @@ public class DonutProgress extends View {
             float textHeight = textPaint.descent() + textPaint.ascent();
             canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
         }
+<<<<<<< HEAD
 
         if (!TextUtils.isEmpty(getInnerBottomText())) {
             textPaint.setTextSize(innerBottomTextSize);
@@ -334,6 +358,8 @@ public class DonutProgress extends View {
             canvas.drawText(getInnerBottomText(), (getWidth() - textPaint.measureText(getInnerBottomText())) / 2.0f, bottomTextBaseline, textPaint);
         }
 
+=======
+>>>>>>> origin/master
     }
 
     @Override
@@ -342,8 +368,11 @@ public class DonutProgress extends View {
         bundle.putParcelable(INSTANCE_STATE, super.onSaveInstanceState());
         bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
         bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
+<<<<<<< HEAD
         bundle.putFloat(INSTANCE_INNER_BOTTOM_TEXT_SIZE, getInnerBottomTextSize());
         bundle.putString(INSTANCE_INNER_BOTTOM_TEXT, getInnerBottomText());
+=======
+>>>>>>> origin/master
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
         bundle.putInt(INSTANCE_MAX, getMax());
@@ -362,8 +391,11 @@ public class DonutProgress extends View {
             final Bundle bundle = (Bundle) state;
             textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
+<<<<<<< HEAD
             innerBottomTextSize = bundle.getFloat(INSTANCE_INNER_BOTTOM_TEXT_SIZE);
             innerBottomText = bundle.getString(INSTANCE_INNER_BOTTOM_TEXT);
+=======
+>>>>>>> origin/master
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
             finishedStrokeWidth = bundle.getFloat(INSTANCE_FINISHED_STROKE_WIDTH);
