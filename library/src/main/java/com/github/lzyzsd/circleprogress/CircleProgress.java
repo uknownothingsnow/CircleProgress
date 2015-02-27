@@ -217,6 +217,10 @@ public class CircleProgress extends View {
         canvas.drawArc(rectF, 270 - angle, angle * 2, false, paint);
         canvas.restore();
 
+        // Also works.
+//        paint.setColor(getFinishedColor());
+//        canvas.drawArc(rectF, 90 - angle, angle * 2, false, paint);
+
         String text = getDrawText();
         if (!TextUtils.isEmpty(text)) {
             float textHeight = textPaint.descent() + textPaint.ascent();

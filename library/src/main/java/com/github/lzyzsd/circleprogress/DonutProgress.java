@@ -261,27 +261,16 @@ public class DonutProgress extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (finishedStrokeWidth > unfinishedStrokeWidth) {
-            finishedOuterRect.set(finishedStrokeWidth / 2,
-                finishedStrokeWidth / 2,
-                getWidth() - finishedStrokeWidth / 2,
-                getHeight() - finishedStrokeWidth / 2);
-            float delta = (finishedStrokeWidth - unfinishedStrokeWidth) / 2f;
-            unfinishedOuterRect.set(unfinishedStrokeWidth / 2,
-                unfinishedStrokeWidth / 2,
-                getWidth() - unfinishedStrokeWidth / 2 - delta,
-                getHeight() - unfinishedStrokeWidth / 2 - delta);
-        } else {
-            float delta = (unfinishedStrokeWidth - finishedStrokeWidth) / 2f;
-            finishedOuterRect.set(finishedStrokeWidth / 2,
-                finishedStrokeWidth / 2,
-                getWidth() - finishedStrokeWidth / 2 - delta,
-                getHeight() - finishedStrokeWidth / 2 - delta);
-            unfinishedOuterRect.set(unfinishedStrokeWidth / 2,
-                unfinishedStrokeWidth / 2,
-                getWidth() - unfinishedStrokeWidth / 2,
-                getHeight() - unfinishedStrokeWidth / 2);
-        }
+        float delta = Math.max(finishedStrokeWidth, unfinishedStrokeWidth);
+        finishedOuterRect.set(delta,
+                delta,
+                getWidth() - delta,
+                getHeight() - delta);
+        unfinishedOuterRect.set(delta,
+                delta,
+                getWidth() - delta,
+                getHeight() - delta);
+
         float innerCircleRadius = (getWidth() - Math.min(finishedStrokeWidth, unfinishedStrokeWidth) + Math.abs(finishedStrokeWidth - unfinishedStrokeWidth)) / 2f;
         canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, innerCircleRadius, innerCirclePaint);
         canvas.drawArc(finishedOuterRect, 0, getProgressAngle(), false, finishedPaint);

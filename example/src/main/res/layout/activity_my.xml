@@ -16,7 +16,9 @@
             android:id="@+id/donut_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            custom:donut_progress="30"/>
+            custom:donut_unfinished_stroke_width="5dp"
+            custom:donut_finished_stroke_width="10dp"
+            custom:donut_progress="70"/>
 
         <com.github.lzyzsd.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
