@@ -18,7 +18,10 @@
             android:layout_height="wrap_content"
             custom:donut_unfinished_stroke_width="5dp"
             custom:donut_finished_stroke_width="10dp"
-            custom:donut_progress="70"/>
+            custom:donut_progress="70"
+            custom:donut_inner_bottom_text="Loading..."
+            custom:donut_inner_bottom_text_size="10dp"
+            custom:donut_inner_bottom_text_color="#214193"/>
 
         <com.github.lzyzsd.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
@@ -47,7 +50,10 @@
             android:layout_height="wrap_content"
             custom:donut_progress="20"
             custom:donut_unfinished_color="#00ff00"
-            custom:donut_finished_stroke_width="10dp"/>
+            custom:donut_finished_stroke_width="10dp"
+            custom:donut_inner_bottom_text="MEMORY"
+            custom:donut_inner_bottom_text_size="10dp"
+            custom:donut_inner_bottom_text_color="#214193"/>
 
         <com.github.lzyzsd.circleprogress.DonutProgress
             android:layout_marginLeft="50dp"
