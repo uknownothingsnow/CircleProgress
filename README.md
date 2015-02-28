@@ -21,7 +21,7 @@ and CleanMaster
 
 ```groovy
 dependencies {
-    compile 'com.github.lzyzsd:circleprogress:1.0.3@aar'
+    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 <dependency>
     <groupId>com.github.lzyzsd</groupId>
     <artifactId>circleprogress</artifactId>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
     <type>apklib</type>
 </dependency>
 ```
@@ -142,6 +142,10 @@ or
 
 run `gradlew.bat assembleDebug` (Windows)
 
+
+###Changes
+
+version 1.1.0: add bottom text to DonutProgressView
 
 DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
                     Version 2, December 2004
