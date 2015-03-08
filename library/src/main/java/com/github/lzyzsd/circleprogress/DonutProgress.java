@@ -294,7 +294,7 @@ public class DonutProgress extends View {
         setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
 
         //TODO calculate inner circle height and then position bottom text at the bottom (3/4)
-        innerBottomTextHeight = getHeight() - (getHeight()*3) /5 ;
+        innerBottomTextHeight = getHeight() - (getHeight()*3) /4 ;
     }
 
     private int measure(int measureSpec){
