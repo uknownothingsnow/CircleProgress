@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.github.lzyzsd.circleprogressexample.MyActivity"
+            android:name=".MyActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,18 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.github.lzyzsd.circleprogressexample.ViewPagerActivity" />
+        <activity android:name=".ViewPagerActivity" />
         <activity
-            android:name="com.github.lzyzsd.circleprogressexample.ItemListActivity"
+            android:name=".ItemListActivity"
             android:label="@string/title_item_list" >
         </activity>
         <activity
-            android:name="com.github.lzyzsd.circleprogressexample.ItemDetailActivity"
+            android:name=".ItemDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName="com.github.lzyzsd.circleprogressexample.ItemListActivity" >
+            android:parentActivityName=".ItemListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.github.lzyzsd.circleprogressexample.ItemListActivity" />
+        </activity>
+        <activity
+            android:name=".ArcInFragment"
+            android:label="@string/title_activity_arc_in_fragment" >
         </activity>
     </application>
 

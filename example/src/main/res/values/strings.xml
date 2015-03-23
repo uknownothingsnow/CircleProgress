@@ -11,5 +11,11 @@
     <string name="title_section3">Section 3</string>
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_activity_arc_in_fragment">ArcInFragment</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_arc_tab">Arc Fragment</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -11,4 +11,9 @@
           android:title="@string/action_list"
           android:orderInCategory="100"
           app:showAsAction="never" />
+
+    <item android:id="@+id/action_arch_tab"
+          android:title="@string/action_arc_tab"
+          android:orderInCategory="100"
+          app:showAsAction="never" />
 </menu>

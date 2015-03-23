@@ -64,6 +64,9 @@ public class MyActivity extends ActionBarActivity {
             case R.id.action_list:
                 startActivity(new Intent(this, ItemListActivity.class));
                 return true;
+            case R.id.action_arch_tab:
+                startActivity(new Intent(this, ArcInFragment.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
