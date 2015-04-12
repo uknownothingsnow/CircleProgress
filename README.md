@@ -65,6 +65,7 @@ attrs for DonutProgress
         <attr name="donut_unfinished_stroke_width" format="dimension"/>
         <attr name="donut_text_size" format="dimension"/>
         <attr name="donut_text_color" format="color"/>
+        <attr name="donut_text" format="string"/>
         <attr name="donut_prefix_text" format="string"/>
         <attr name="donut_suffix_text" format="string"/>
         <attr name="donut_background_color" format="color"/>
