@@ -1,3 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.lzyzsd.circleprogress">
-</manifest>
+<manifest package="com.github.lzyzsd.circleprogress" />
