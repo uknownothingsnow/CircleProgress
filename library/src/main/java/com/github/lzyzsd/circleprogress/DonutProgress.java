@@ -38,6 +38,7 @@ public class DonutProgress extends View {
     private int innerBackgroundColor;
     private String prefixText = "";
     private String suffixText = "%";
+    private String text = null;
     private float innerBottomTextSize;
     private String innerBottomText;
     private float innerBottomTextHeight;
@@ -57,6 +58,7 @@ public class DonutProgress extends View {
     private static final String INSTANCE_STATE = "saved_instance";
     private static final String INSTANCE_TEXT_COLOR = "text_color";
     private static final String INSTANCE_TEXT_SIZE = "text_size";
+    private static final String INSTANCE_TEXT = "text";
     private static final String INSTANCE_INNER_BOTTOM_TEXT_SIZE = "inner_bottom_text_size";
     private static final String INSTANCE_INNER_BOTTOM_TEXT = "inner_bottom_text";
     private static final String INSTANCE_INNER_BOTTOM_TEXT_COLOR = "inner_bottom_text_color";
@@ -136,6 +138,9 @@ public class DonutProgress extends View {
         }
         if (attributes.getString(R.styleable.DonutProgress_donut_suffix_text) != null) {
             suffixText = attributes.getString(R.styleable.DonutProgress_donut_suffix_text);
+        }
+        if (attributes.getString(R.styleable.DonutProgress_donut_text) != null) {
+            text = attributes.getString(R.styleable.DonutProgress_donut_text);
         }
         innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
 
@@ -228,6 +233,15 @@ public class DonutProgress extends View {
 
     public void setUnfinishedStrokeColor(int unfinishedStrokeColor) {
         this.unfinishedStrokeColor = unfinishedStrokeColor;
+        this.invalidate();
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
         this.invalidate();
     }
 
@@ -331,7 +345,7 @@ public class DonutProgress extends View {
         canvas.drawArc(finishedOuterRect, 0, getProgressAngle(), false, finishedPaint);
         canvas.drawArc(unfinishedOuterRect, getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
-        String text = prefixText + progress + suffixText;
+        String text = this.text != null ? this.text : prefixText + progress + suffixText;
         if (!TextUtils.isEmpty(text)) {
             float textHeight = textPaint.descent() + textPaint.ascent();
             canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
@@ -361,6 +375,7 @@ public class DonutProgress extends View {
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
+        bundle.putString(INSTANCE_TEXT, getText());
         bundle.putFloat(INSTANCE_FINISHED_STROKE_WIDTH, getFinishedStrokeWidth());
         bundle.putFloat(INSTANCE_UNFINISHED_STROKE_WIDTH, getUnfinishedStrokeWidth());
         bundle.putInt(INSTANCE_BACKGROUND_COLOR, getInnerBackgroundColor());
@@ -386,6 +401,7 @@ public class DonutProgress extends View {
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
+            text = bundle.getString(INSTANCE_TEXT);
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));
             return;
         }
