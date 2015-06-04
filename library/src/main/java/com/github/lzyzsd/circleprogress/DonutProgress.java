@@ -76,6 +76,7 @@ public class DonutProgress extends View {
     private static final String INSTANCE_FINISHED_STROKE_WIDTH = "finished_stroke_width";
     private static final String INSTANCE_UNFINISHED_STROKE_WIDTH = "unfinished_stroke_width";
     private static final String INSTANCE_BACKGROUND_COLOR = "inner_background_color";
+    private static final String INSTANCE_INNER_DRAWABLE = "inner_drawable";
 
     public DonutProgress(Context context) {
         this(context, null);
@@ -137,7 +138,7 @@ public class DonutProgress extends View {
         attributeResourceId = attributes.getResourceId(R.styleable.DonutProgress_donut_inner_drawable, 0);
 
         setMax(attributes.getInt(R.styleable.DonutProgress_donut_max, default_max));
-        setProgress(attributes.getInt(R.styleable.DonutProgress_donut_progress, 0));
+        setProgress(attributes.getFloat(R.styleable.DonutProgress_donut_progress, 0));
         finishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_finished_stroke_width, default_stroke_width);
         unfinishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_unfinished_stroke_width, default_stroke_width);
 
@@ -322,6 +323,13 @@ public class DonutProgress extends View {
         this.invalidate();
     }
 
+    public int getAttributeResourceId() {
+        return attributeResourceId;
+    }
+
+    public void setAttributeResourceId(int attributeResourceId) {
+        this.attributeResourceId = attributeResourceId;
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -405,6 +413,7 @@ public class DonutProgress extends View {
         bundle.putFloat(INSTANCE_FINISHED_STROKE_WIDTH, getFinishedStrokeWidth());
         bundle.putFloat(INSTANCE_UNFINISHED_STROKE_WIDTH, getUnfinishedStrokeWidth());
         bundle.putInt(INSTANCE_BACKGROUND_COLOR, getInnerBackgroundColor());
+        bundle.putInt(INSTANCE_INNER_DRAWABLE, getAttributeResourceId());
         return bundle;
     }
 
@@ -422,6 +431,7 @@ public class DonutProgress extends View {
             finishedStrokeWidth = bundle.getFloat(INSTANCE_FINISHED_STROKE_WIDTH);
             unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
             innerBackgroundColor = bundle.getInt(INSTANCE_BACKGROUND_COLOR);
+            attributeResourceId = bundle.getInt(INSTANCE_INNER_DRAWABLE);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
             setProgress(bundle.getFloat(INSTANCE_PROGRESS));
