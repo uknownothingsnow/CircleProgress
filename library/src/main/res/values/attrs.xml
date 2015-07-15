@@ -36,6 +36,8 @@
         <attr name="donut_inner_bottom_text" format="string"/>
         <attr name="donut_inner_bottom_text_size" format="dimension"/>
         <attr name="donut_inner_bottom_text_color" format="color"/>
+
+        <attr name="donut_circle_starting_degree" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="ArcProgress">
