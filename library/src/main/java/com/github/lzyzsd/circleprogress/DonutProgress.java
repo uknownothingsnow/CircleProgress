@@ -384,6 +384,7 @@ public class DonutProgress extends View {
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
         bundle.putInt(INSTANCE_MAX, getMax());
+        bundle.putInt(INSTANCE_STARTING_DEGREE, getStartingDegree());
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
@@ -410,6 +411,7 @@ public class DonutProgress extends View {
             innerBackgroundColor = bundle.getInt(INSTANCE_BACKGROUND_COLOR);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
+            setStartingDegree(bundle.getInt(INSTANCE_STARTING_DEGREE));
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
