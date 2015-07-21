@@ -26,6 +26,7 @@ public class DonutProgress extends View {
     private RectF finishedOuterRect = new RectF();
     private RectF unfinishedOuterRect = new RectF();
 
+    private int startDegree = 0;
     private float textSize;
     private int textColor;
     private int innerBottomTextColor;
@@ -43,6 +44,7 @@ public class DonutProgress extends View {
     private String innerBottomText;
     private float innerBottomTextHeight;
 
+    private final int default_start_degree = 0;
     private final float default_stroke_width;
     private final int default_finished_color = Color.rgb(66, 145, 241);
     private final int default_unfinished_color = Color.rgb(204, 204, 204);
@@ -65,6 +67,7 @@ public class DonutProgress extends View {
     private static final String INSTANCE_FINISHED_STROKE_COLOR = "finished_stroke_color";
     private static final String INSTANCE_UNFINISHED_STROKE_COLOR = "unfinished_stroke_color";
     private static final String INSTANCE_MAX = "max";
+    private static final String INSTANCE_START_DEGREE = "start_degree";
     private static final String INSTANCE_PROGRESS = "progress";
     private static final String INSTANCE_SUFFIX = "suffix";
     private static final String INSTANCE_PREFIX = "prefix";
@@ -147,6 +150,7 @@ public class DonutProgress extends View {
         innerBottomTextSize = attributes.getDimension(R.styleable.DonutProgress_donut_inner_bottom_text_size, default_inner_bottom_text_size);
         innerBottomTextColor = attributes.getColor(R.styleable.DonutProgress_donut_inner_bottom_text_color, default_inner_bottom_text_color);
         innerBottomText = attributes.getString(R.styleable.DonutProgress_donut_inner_bottom_text);
+        startDegree = attributes.getInt(R.styleable.DonutProgress_donut_start_degree, default_start_degree);
     }
 
     @Override
@@ -301,7 +305,13 @@ public class DonutProgress extends View {
         this.invalidate();
     }
 
+    public int getStartDegree() {
+		return startDegree;
+	}
 
+	public void setStartDegree(int startAngle) {
+		this.startDegree = startAngle;
+	}
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -342,8 +352,8 @@ public class DonutProgress extends View {
 
         float innerCircleRadius = (getWidth() - Math.min(finishedStrokeWidth, unfinishedStrokeWidth) + Math.abs(finishedStrokeWidth - unfinishedStrokeWidth)) / 2f;
         canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, innerCircleRadius, innerCirclePaint);
-        canvas.drawArc(finishedOuterRect, 0, getProgressAngle(), false, finishedPaint);
-        canvas.drawArc(unfinishedOuterRect, getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
+        canvas.drawArc(finishedOuterRect, startDegree, getProgressAngle(), false, finishedPaint);
+        canvas.drawArc(unfinishedOuterRect, startDegree + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
         String text = this.text != null ? this.text : prefixText + progress + suffixText;
         if (!TextUtils.isEmpty(text)) {
@@ -372,6 +382,7 @@ public class DonutProgress extends View {
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
         bundle.putInt(INSTANCE_MAX, getMax());
+        bundle.putInt(INSTANCE_START_DEGREE, getStartDegree());
         bundle.putInt(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
@@ -398,6 +409,7 @@ public class DonutProgress extends View {
             innerBackgroundColor = bundle.getInt(INSTANCE_BACKGROUND_COLOR);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
+            setStartDegree(bundle.getInt(INSTANCE_START_DEGREE));
             setProgress(bundle.getInt(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
