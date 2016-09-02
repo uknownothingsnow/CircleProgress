@@ -421,4 +421,9 @@ public class DonutProgress extends View {
         }
         super.onRestoreInstanceState(state);
     }
+     public void setDonut_progress(String percent){
+        if(!TextUtils.isEmpty(percent)){
+            setProgress(Integer.parseInt(percent));
+        }
+    }
 }
