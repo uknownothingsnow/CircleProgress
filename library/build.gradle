@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 version = "1.2.0"
 
@@ -19,72 +17,5 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-}
-
-def siteUrl = 'https://github.com/lzyzsd/CircleProgress'
-def gitUrl = 'https://github.com/lzyzsd/CircleProgress.git'
-group = "com.github.lzyzsd.circleprogress"
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                // Add your description here
-                name 'Circle Progress, Donut Progress, Arc Progress'
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'MIT'
-                        url 'http://opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'lzyzsd'
-                        name 'Bruce Lee'
-                        email 'bruceinpeking@gmail.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "CircleProgress"
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["MIT"]
-        publish = true
     }
 }
