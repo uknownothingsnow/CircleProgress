@@ -2,6 +2,8 @@ package com.github.lzyzsd.circleprogress;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -20,16 +22,19 @@ public class DonutProgress extends View {
     private Paint finishedPaint;
     private Paint unfinishedPaint;
     private Paint innerCirclePaint;
+
     protected Paint textPaint;
     protected Paint innerBottomTextPaint;
 
     private RectF finishedOuterRect = new RectF();
     private RectF unfinishedOuterRect = new RectF();
 
+    private int attributeResourceId = 0;
+    private boolean showText;
     private float textSize;
     private int textColor;
     private int innerBottomTextColor;
-    private int progress = 0;
+    private float progress = 0;
     private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
@@ -74,6 +79,7 @@ public class DonutProgress extends View {
     private static final String INSTANCE_UNFINISHED_STROKE_WIDTH = "unfinished_stroke_width";
     private static final String INSTANCE_BACKGROUND_COLOR = "inner_background_color";
     private static final String INSTANCE_STARTING_DEGREE = "starting_degree";
+    private static final String INSTANCE_INNER_DRAWABLE = "inner_drawable";
 
     public DonutProgress(Context context) {
         this(context, null);
@@ -99,15 +105,17 @@ public class DonutProgress extends View {
     }
 
     protected void initPainters() {
-        textPaint = new TextPaint();
-        textPaint.setColor(textColor);
-        textPaint.setTextSize(textSize);
-        textPaint.setAntiAlias(true);
+        if (showText) {
+            textPaint = new TextPaint();
+            textPaint.setColor(textColor);
+            textPaint.setTextSize(textSize);
+            textPaint.setAntiAlias(true);
 
-        innerBottomTextPaint = new TextPaint();
-        innerBottomTextPaint.setColor(innerBottomTextColor);
-        innerBottomTextPaint.setTextSize(innerBottomTextSize);
-        innerBottomTextPaint.setAntiAlias(true);
+            innerBottomTextPaint = new TextPaint();
+            innerBottomTextPaint.setColor(innerBottomTextColor);
+            innerBottomTextPaint.setTextSize(innerBottomTextSize);
+            innerBottomTextPaint.setAntiAlias(true);
+        }
 
         finishedPaint = new Paint();
         finishedPaint.setColor(finishedStrokeColor);
@@ -129,35 +137,52 @@ public class DonutProgress extends View {
     protected void initByAttributes(TypedArray attributes) {
         finishedStrokeColor = attributes.getColor(R.styleable.DonutProgress_donut_finished_color, default_finished_color);
         unfinishedStrokeColor = attributes.getColor(R.styleable.DonutProgress_donut_unfinished_color, default_unfinished_color);
-        textColor = attributes.getColor(R.styleable.DonutProgress_donut_text_color, default_text_color);
-        textSize = attributes.getDimension(R.styleable.DonutProgress_donut_text_size, default_text_size);
+        showText = attributes.getBoolean(R.styleable.DonutProgress_donut_show_text, true);
+        attributeResourceId = attributes.getResourceId(R.styleable.DonutProgress_donut_inner_drawable, 0);
 
         setMax(attributes.getInt(R.styleable.DonutProgress_donut_max, default_max));
-        setProgress(attributes.getInt(R.styleable.DonutProgress_donut_progress, 0));
+        setProgress(attributes.getFloat(R.styleable.DonutProgress_donut_progress, 0));
         finishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_finished_stroke_width, default_stroke_width);
         unfinishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_unfinished_stroke_width, default_stroke_width);
-        if (attributes.getString(R.styleable.DonutProgress_donut_prefix_text) != null) {
-            prefixText = attributes.getString(R.styleable.DonutProgress_donut_prefix_text);
+
+        if (showText) {
+            if (attributes.getString(R.styleable.DonutProgress_donut_prefix_text) != null) {
+                prefixText = attributes.getString(R.styleable.DonutProgress_donut_prefix_text);
+            }
+            if (attributes.getString(R.styleable.DonutProgress_donut_suffix_text) != null) {
+                suffixText = attributes.getString(R.styleable.DonutProgress_donut_suffix_text);
+            }
+            if (attributes.getString(R.styleable.DonutProgress_donut_text) != null) {
+                text = attributes.getString(R.styleable.DonutProgress_donut_text);
+            }
+
+            textColor = attributes.getColor(R.styleable.DonutProgress_donut_text_color, default_text_color);
+            textSize = attributes.getDimension(R.styleable.DonutProgress_donut_text_size, default_text_size);
+            innerBottomTextSize = attributes.getDimension(R.styleable.DonutProgress_donut_inner_bottom_text_size, default_inner_bottom_text_size);
+            innerBottomTextColor = attributes.getColor(R.styleable.DonutProgress_donut_inner_bottom_text_color, default_inner_bottom_text_color);
+            innerBottomText = attributes.getString(R.styleable.DonutProgress_donut_inner_bottom_text);
         }
-        if (attributes.getString(R.styleable.DonutProgress_donut_suffix_text) != null) {
-            suffixText = attributes.getString(R.styleable.DonutProgress_donut_suffix_text);
-        }
-        if (attributes.getString(R.styleable.DonutProgress_donut_text) != null) {
-            text = attributes.getString(R.styleable.DonutProgress_donut_text);
-        }
-        innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
 
         innerBottomTextSize = attributes.getDimension(R.styleable.DonutProgress_donut_inner_bottom_text_size, default_inner_bottom_text_size);
         innerBottomTextColor = attributes.getColor(R.styleable.DonutProgress_donut_inner_bottom_text_color, default_inner_bottom_text_color);
         innerBottomText = attributes.getString(R.styleable.DonutProgress_donut_inner_bottom_text);
 
         startingDegree = attributes.getInt(R.styleable.DonutProgress_donut_circle_starting_degree, default_startingDegree);
+        innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
     }
 
     @Override
     public void invalidate() {
         initPainters();
         super.invalidate();
+    }
+
+    public boolean isShowText() {
+        return showText;
+    }
+
+    public void setShowText(boolean showText) {
+        this.showText = showText;
     }
 
     public float getFinishedStrokeWidth() {
@@ -182,11 +207,11 @@ public class DonutProgress extends View {
         return getProgress() / (float) max * 360f;
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(float progress) {
         this.progress = progress;
         if (this.progress > getMax()) {
             this.progress %= getMax();
@@ -315,23 +340,31 @@ public class DonutProgress extends View {
         this.invalidate();
     }
 
+    public int getAttributeResourceId() {
+        return attributeResourceId;
+    }
+
+    public void setAttributeResourceId(int attributeResourceId) {
+        this.attributeResourceId = attributeResourceId;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
 
         //TODO calculate inner circle height and then position bottom text at the bottom (3/4)
-        innerBottomTextHeight = getHeight() - (getHeight()*3) /4 ;
+        innerBottomTextHeight = getHeight() - (getHeight() * 3) / 4;
     }
 
-    private int measure(int measureSpec){
+    private int measure(int measureSpec) {
         int result;
         int mode = MeasureSpec.getMode(measureSpec);
         int size = MeasureSpec.getSize(measureSpec);
-        if(mode == MeasureSpec.EXACTLY){
+        if (mode == MeasureSpec.EXACTLY) {
             result = size;
-        }else{
+        } else {
             result = min_size;
-            if(mode == MeasureSpec.AT_MOST){
+            if (mode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, size);
             }
         }
@@ -357,18 +390,24 @@ public class DonutProgress extends View {
         canvas.drawArc(finishedOuterRect, getStartingDegree(), getProgressAngle(), false, finishedPaint);
         canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
-        String text = this.text != null ? this.text : prefixText + progress + suffixText;
-        if (!TextUtils.isEmpty(text)) {
-            float textHeight = textPaint.descent() + textPaint.ascent();
-            canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
+        if (showText) {
+            String text = this.text != null ? this.text : prefixText + progress + suffixText;
+            if (!TextUtils.isEmpty(text)) {
+                float textHeight = textPaint.descent() + textPaint.ascent();
+                canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
+            }
+
+            if (!TextUtils.isEmpty(getInnerBottomText())) {
+                innerBottomTextPaint.setTextSize(innerBottomTextSize);
+                float bottomTextBaseline = getHeight() - innerBottomTextHeight - (textPaint.descent() + textPaint.ascent()) / 2;
+                canvas.drawText(getInnerBottomText(), (getWidth() - innerBottomTextPaint.measureText(getInnerBottomText())) / 2.0f, bottomTextBaseline, innerBottomTextPaint);
+            }
         }
 
-        if (!TextUtils.isEmpty(getInnerBottomText())) {
-            innerBottomTextPaint.setTextSize(innerBottomTextSize);
-            float bottomTextBaseline = getHeight() - innerBottomTextHeight - (textPaint.descent() + textPaint.ascent()) / 2;
-            canvas.drawText(getInnerBottomText(), (getWidth() - innerBottomTextPaint.measureText(getInnerBottomText())) / 2.0f, bottomTextBaseline, innerBottomTextPaint);
+        if (attributeResourceId != 0) {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), attributeResourceId);
+            canvas.drawBitmap(bitmap, (getWidth() - bitmap.getWidth()) / 2.0f, (getHeight() - bitmap.getHeight()) / 2.0f, null);
         }
-
     }
 
     @Override
@@ -385,19 +424,20 @@ public class DonutProgress extends View {
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
         bundle.putInt(INSTANCE_MAX, getMax());
         bundle.putInt(INSTANCE_STARTING_DEGREE, getStartingDegree());
-        bundle.putInt(INSTANCE_PROGRESS, getProgress());
+        bundle.putFloat(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
         bundle.putString(INSTANCE_TEXT, getText());
         bundle.putFloat(INSTANCE_FINISHED_STROKE_WIDTH, getFinishedStrokeWidth());
         bundle.putFloat(INSTANCE_UNFINISHED_STROKE_WIDTH, getUnfinishedStrokeWidth());
         bundle.putInt(INSTANCE_BACKGROUND_COLOR, getInnerBackgroundColor());
+        bundle.putInt(INSTANCE_INNER_DRAWABLE, getAttributeResourceId());
         return bundle;
     }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if(state instanceof Bundle) {
+        if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
             textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
@@ -409,10 +449,11 @@ public class DonutProgress extends View {
             finishedStrokeWidth = bundle.getFloat(INSTANCE_FINISHED_STROKE_WIDTH);
             unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
             innerBackgroundColor = bundle.getInt(INSTANCE_BACKGROUND_COLOR);
+            attributeResourceId = bundle.getInt(INSTANCE_INNER_DRAWABLE);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
             setStartingDegree(bundle.getInt(INSTANCE_STARTING_DEGREE));
-            setProgress(bundle.getInt(INSTANCE_PROGRESS));
+            setProgress(bundle.getFloat(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
             text = bundle.getString(INSTANCE_TEXT);

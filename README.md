@@ -17,23 +17,23 @@ and CleanMaster
 
 ##Usage
 
+please use jitpack
+
+```
+    allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+
 ###Gradle
 
 ```groovy
 dependencies {
-    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+    compile 'com.github.lzyzsd:circleprogress:1.1.1'
 }
-```
-
-###Maven
-
-```xml
-<dependency>
-    <groupId>com.github.lzyzsd</groupId>
-    <artifactId>circleprogress</artifactId>
-    <version>1.1.0</version>
-    <type>apklib</type>
-</dependency>
 ```
 
 ###Notice
@@ -134,6 +134,16 @@ attrs for ArchProgress
         <attr name="arc_bottom_text_size" format="dimension"/>
     </declare-styleable>
 ```
+
+
+donut_inner_drawable
+
+support add a drawable to the center
+
+donut_show_text
+
+show or hide bottom text
+
 
 ###Build
 

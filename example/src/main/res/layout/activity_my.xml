@@ -1,118 +1,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MyActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.github.lzyzsd.circleprogress.DonutProgress
+        android:id="@+id/donut_progress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        custom:donut_finished_color="#0066FF"
+        custom:donut_finished_stroke_width="15dp"
+        android:backgroundTint="#0066FF"
+        android:backgroundTintMode="add"
+        custom:donut_inner_drawable="@drawable/ic_star_black_48dp"
+        custom:donut_show_text="false"
+        custom:donut_unfinished_color="@color/primary_material_light"
+        custom:donut_unfinished_stroke_width="15dp" />
 
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:layout_marginLeft="50dp"
-            android:id="@+id/donut_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            custom:donut_unfinished_stroke_width="5dp"
-            custom:donut_finished_stroke_width="10dp"
-            custom:donut_progress="70"
-            custom:donut_inner_bottom_text="Loading..."
-            custom:donut_inner_bottom_text_size="10dp"
-            custom:donut_inner_bottom_text_color="#214193"/>
-
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            custom:donut_progress="20"
-            custom:donut_unfinished_color="#ff0000"
-            custom:donut_finished_stroke_width="10dp"
-            custom:donut_background_color="#ffff00"
-            custom:donut_prefix_text="A"
-            custom:donut_suffix_text="$"
-            custom:donut_finished_color="#0000ff"
-            custom:donut_unfinished_stroke_width="10dp"
-            custom:donut_text_color="#000000"
-            custom:donut_text_size="16sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            custom:donut_progress="20"
-            custom:donut_unfinished_color="#00ff00"
-            custom:donut_finished_stroke_width="10dp"
-            custom:donut_inner_bottom_text="MEMORY"
-            custom:donut_inner_bottom_text_size="10dp"
-            custom:donut_inner_bottom_text_color="#214193"/>
-
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            custom:donut_progress="20"
-            custom:donut_unfinished_color="#ff0000"
-            custom:donut_unfinished_stroke_width="20dp"
-            custom:donut_finished_stroke_width="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.github.lzyzsd.circleprogress.ArcProgress
-            android:id="@+id/arc_progress"
-            android:background="#214193"
-            android:layout_marginLeft="50dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            custom:arc_progress="10"
-            custom:arc_bottom_text="MEMORY"/>
-
-        <com.github.lzyzsd.circleprogress.ArcProgress
-            android:background="#214193"
-            android:layout_marginLeft="50dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            custom:arc_progress="30"
-            custom:arc_bottom_text="STORAGE"
-            custom:arc_finished_color="#ffffff"
-            custom:arc_unfinished_color="#ff0000"
-            custom:arc_suffix_text="#"
-            custom:arc_text_color="#ffffff"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.github.lzyzsd.circleprogress.CircleProgress
-            android:id="@+id/circle_progress"
-            android:layout_marginLeft="50dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            custom:circle_progress="10"/>
-
-        <com.github.lzyzsd.circleprogress.CircleProgress
-            android:layout_marginLeft="50dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            custom:circle_progress="25"
-            custom:circle_finished_color="#ff0000"
-            custom:circle_unfinished_color="#00ff00"
-            custom:circle_text_color="#ffffff"
-            custom:circle_suffix_text="$"
-            custom:circle_text_size="16sp"/>
-    </LinearLayout>
 </LinearLayout>
