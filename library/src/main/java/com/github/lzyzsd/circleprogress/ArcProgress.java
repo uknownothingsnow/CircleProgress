@@ -22,6 +22,8 @@ public class ArcProgress extends View {
 
     private RectF rectF = new RectF();
 
+
+
     private float strokeWidth;
     private float suffixTextSize;
     private float bottomTextSize;
@@ -29,6 +31,7 @@ public class ArcProgress extends View {
     private float textSize;
     private int textColor;
     private int progress = 0;
+    private int currentProgress = 0;
     private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
@@ -165,8 +168,12 @@ public class ArcProgress extends View {
         if (this.progress > getMax()) {
             this.progress %= getMax();
         }
+        currentProgress = 0;
         invalidate();
     }
+
+
+
 
     public int getMax() {
         return max;
@@ -275,14 +282,14 @@ public class ArcProgress extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float startAngle = 270 - arcAngle / 2f;
-        float finishedSweepAngle = progress / (float) getMax() * arcAngle;
+        float finishedSweepAngle = currentProgress / (float) getMax() * arcAngle;
         float finishedStartAngle = startAngle;
         paint.setColor(unfinishedStrokeColor);
         canvas.drawArc(rectF, startAngle, arcAngle, false, paint);
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
-        String text = String.valueOf(getProgress());
+        String text = String.valueOf(currentProgress);
         if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
@@ -304,6 +311,10 @@ public class ArcProgress extends View {
             textPaint.setTextSize(bottomTextSize);
             float bottomTextBaseline = getHeight() - arcBottomHeight - (textPaint.descent() + textPaint.ascent()) / 2;
             canvas.drawText(getBottomText(), (getWidth() - textPaint.measureText(getBottomText())) / 2.0f, bottomTextBaseline, textPaint);
+        }
+        if (currentProgress < progress) {
+            currentProgress++;
+            invalidate();
         }
     }
 
