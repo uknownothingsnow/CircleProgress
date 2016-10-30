@@ -35,6 +35,7 @@ public class ArcProgress extends View {
     private float arcAngle;
     private String suffixText = "%";
     private float suffixTextPadding;
+    private String arcText = "";
 
     private float arcBottomHeight;
 
@@ -244,7 +245,16 @@ public class ArcProgress extends View {
 
     public float getSuffixTextPadding() {
         return suffixTextPadding;
+    }    
+    
+    public void setArcText(String arcText) {
+        this.arcText = arcText;
+        this.invalidate();
     }
+    
+    public String getArcText() {
+        return arcText;
+    }    
 
     public void setSuffixTextPadding(float suffixTextPadding) {
         this.suffixTextPadding = suffixTextPadding;
@@ -282,7 +292,9 @@ public class ArcProgress extends View {
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
-        String text = String.valueOf(getProgress());
+        String text ;
+        if (TextUtils.isEmpty(this.arcText)) {text = this.arcText;} else {text = String.valueOf(getProgress());}
+        
         if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
