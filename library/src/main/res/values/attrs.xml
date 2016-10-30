@@ -51,6 +51,7 @@
         <attr name="arc_unfinished_color" format="color"/>
         <attr name="arc_finished_color" format="color"/>
 
+        <attr name="arc_text" format="string"/>
         <attr name="arc_text_size" format="dimension"/>
         <attr name="arc_text_color" format="color"/>
 
