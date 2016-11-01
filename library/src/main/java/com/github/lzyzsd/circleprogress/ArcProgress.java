@@ -293,7 +293,7 @@ public class ArcProgress extends View {
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
         String text ;
-        if (TextUtils.isEmpty(this.arcText)) {text = this.arcText;} else {text = String.valueOf(getProgress());}
+        if (this.arcText.equals("")) {text = this.arcText;} else {text = String.valueOf(getProgress());}
         
         if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(textColor);
