@@ -32,7 +32,7 @@ please use jitpack
 
 ```groovy
 dependencies {
-    compile 'com.github.lzyzsd:circleprogress:1.1.1'
+    compile 'com.github.lzyzsd:circleprogress:v1.1.1'
 }
 ```
 
