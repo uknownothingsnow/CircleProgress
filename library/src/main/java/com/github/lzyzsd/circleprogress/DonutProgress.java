@@ -209,10 +209,7 @@ public class DonutProgress extends View
 
     protected void initInnerBitmap()
     {
-        if (attributeResourceId != 0)
-        {
-            bitmap = Utils.getBitmap(getContext(), attributeResourceId);
-        }
+        initInnerBitmap(getContext());
     }
 
     @Override
@@ -555,6 +552,7 @@ public class DonutProgress extends View
             unfinishedStrokeWidth = bundle.getFloat(INSTANCE_UNFINISHED_STROKE_WIDTH);
             innerBackgroundColor = bundle.getInt(INSTANCE_BACKGROUND_COLOR);
             attributeResourceId = bundle.getInt(INSTANCE_INNER_DRAWABLE);
+            initInnerBitmap();
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
             setStartingDegree(bundle.getInt(INSTANCE_STARTING_DEGREE));
