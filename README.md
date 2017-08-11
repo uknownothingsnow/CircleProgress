@@ -1,5 +1,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android+Arsenal-CircleProgress-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1130)
 
+A Fork of [https://github.com/lzyzsd/CircleProgress](https://github.com/lzyzsd/CircleProgress) to support `VectorDrawable` and other updates.
+
 inspired from
 [https://github.com/daimajia/NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 
@@ -32,7 +34,7 @@ please use jitpack
 
 ```groovy
 dependencies {
-    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    compile 'com.github.JimVanG:donutprogress:1.2.2'
 }
 ```
 
@@ -138,12 +140,11 @@ attrs for ArchProgress
 
 donut_inner_drawable
 
-support add a drawable to the center
+support add a drawable to the center (now supports `VectorDrawable`s)
 
 donut_show_text
 
 show or hide bottom text
-
 
 ###Build
 
