@@ -34,7 +34,7 @@ please use jitpack
 
 ```groovy
 dependencies {
-    compile 'com.github.JimVanG:donutprogress:1.2.2'
+    compile 'com.github.JimVanG:donutprogress:1.2.3'
 }
 ```
 
