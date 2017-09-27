@@ -11,12 +11,11 @@ import android.os.Parcelable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by bruce on 11/6/14.
  */
-public class ArcProgress extends View {
+public class ArcProgress extends BaseProgress {
     private Paint paint;
     protected Paint textPaint;
 
@@ -28,7 +27,7 @@ public class ArcProgress extends View {
     private String bottomText;
     private float textSize;
     private int textColor;
-    private int progress = 0;
+    private float progress = 0;
     private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
@@ -107,6 +106,9 @@ public class ArcProgress extends View {
         suffixTextPadding = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_padding, default_suffix_padding);
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
+
+        digits = attributes.getInt(R.styleable.CircleProgress_progress_digits, 0);
+        setFormatter();
     }
 
     protected void initPainters() {
@@ -156,11 +158,11 @@ public class ArcProgress extends View {
         this.invalidate();
     }
 
-    public int getProgress() {
-        return progress;
+    public float getProgress() {
+        return Float.parseFloat(mFormat.format(progress));
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(float progress) {
         this.progress = progress;
         if (this.progress > getMax()) {
             this.progress %= getMax();
@@ -319,7 +321,7 @@ public class ArcProgress extends View {
         bundle.putString(INSTANCE_BOTTOM_TEXT, getBottomText());
         bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
         bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
-        bundle.putInt(INSTANCE_PROGRESS, getProgress());
+        bundle.putFloat(INSTANCE_PROGRESS, getProgress());
         bundle.putInt(INSTANCE_MAX, getMax());
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
@@ -340,7 +342,7 @@ public class ArcProgress extends View {
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
             textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
             setMax(bundle.getInt(INSTANCE_MAX));
-            setProgress(bundle.getInt(INSTANCE_PROGRESS));
+            setProgress(bundle.getFloat(INSTANCE_PROGRESS));
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
             suffixText = bundle.getString(INSTANCE_SUFFIX);

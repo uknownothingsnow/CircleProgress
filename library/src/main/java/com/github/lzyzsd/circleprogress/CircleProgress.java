@@ -11,18 +11,17 @@ import android.os.Parcelable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by bruce on 11/4/14.
  */
-public class CircleProgress extends View {
+public class CircleProgress extends BaseProgress {
     private Paint textPaint;
     private RectF rectF = new RectF();
 
     private float textSize;
     private int textColor;
-    private int progress = 0;
+    private float progress = 0;
     private int max;
     private int finishedColor;
     private int unfinishedColor;
@@ -76,7 +75,7 @@ public class CircleProgress extends View {
         textSize = attributes.getDimension(R.styleable.CircleProgress_circle_text_size, default_text_size);
 
         setMax(attributes.getInt(R.styleable.CircleProgress_circle_max, default_max));
-        setProgress(attributes.getInt(R.styleable.CircleProgress_circle_progress, 0));
+        setProgress(attributes.getFloat(R.styleable.CircleProgress_circle_progress, 0));
 
         if (attributes.getString(R.styleable.CircleProgress_circle_prefix_text) != null) {
             setPrefixText(attributes.getString(R.styleable.CircleProgress_circle_prefix_text));
@@ -84,6 +83,9 @@ public class CircleProgress extends View {
         if (attributes.getString(R.styleable.CircleProgress_circle_suffix_text) != null) {
             setSuffixText(attributes.getString(R.styleable.CircleProgress_circle_suffix_text));
         }
+
+        digits = attributes.getInt(R.styleable.CircleProgress_progress_digits, 0);
+        setFormatter();
     }
 
     protected void initPainters() {
@@ -101,11 +103,11 @@ public class CircleProgress extends View {
         super.invalidate();
     }
 
-    public int getProgress() {
-        return progress;
+    public float getProgress() {
+        return Float.parseFloat(mFormat.format(progress));
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(float progress) {
         this.progress = progress;
         if (this.progress > getMax()) {
             this.progress %= getMax();
@@ -237,7 +239,7 @@ public class CircleProgress extends View {
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedColor());
         bundle.putInt(INSTANCE_MAX, getMax());
-        bundle.putInt(INSTANCE_PROGRESS, getProgress());
+        bundle.putFloat(INSTANCE_PROGRESS, getProgress());
         bundle.putString(INSTANCE_SUFFIX, getSuffixText());
         bundle.putString(INSTANCE_PREFIX, getPrefixText());
         return bundle;
@@ -253,7 +255,7 @@ public class CircleProgress extends View {
             unfinishedColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
             initPainters();
             setMax(bundle.getInt(INSTANCE_MAX));
-            setProgress(bundle.getInt(INSTANCE_PROGRESS));
+            setProgress(bundle.getFloat(INSTANCE_PROGRESS));
             prefixText = bundle.getString(INSTANCE_PREFIX);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
             super.onRestoreInstanceState(bundle.getParcelable(INSTANCE_STATE));

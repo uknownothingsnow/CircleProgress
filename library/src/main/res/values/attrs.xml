@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CircleProgress">
-        <attr name="circle_progress" format="integer"/>
+        <attr name="circle_progress" format="float"/>
         <attr name="circle_max" format="integer"/>
+        <attr name="progress_digits" format="integer"/>
 
         <attr name="circle_unfinished_color" format="color"/>
         <attr name="circle_finished_color" format="color"/>
@@ -17,7 +18,7 @@
     <declare-styleable name="DonutProgress">
         <attr name="donut_progress" format="float"/>
         <attr name="donut_max" format="integer"/>
-        <attr name="donut_digits" format="integer"/>
+        <attr name="progress_digits" format="integer"/>
 
         <attr name="donut_unfinished_color" format="color"/>
         <attr name="donut_finished_color" format="color"/>
@@ -45,6 +46,7 @@
 
     <declare-styleable name="ArcProgress">
         <attr name="arc_progress" format="integer"/>
+        <attr name="progress_digits" format="integer"/>
         <attr name="arc_angle" format="float"/>
         <attr name="arc_stroke_width" format="dimension"/>
         <attr name="arc_max" format="integer"/>

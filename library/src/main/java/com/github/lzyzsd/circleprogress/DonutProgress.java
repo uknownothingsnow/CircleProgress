@@ -13,14 +13,11 @@ import android.os.Parcelable;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
-
-import java.text.DecimalFormat;
 
 /**
  * Created by bruce on 14-10-30.
  */
-public class DonutProgress extends View {
+public class DonutProgress extends BaseProgress {
     private Paint finishedPaint;
     private Paint unfinishedPaint;
     private Paint innerCirclePaint;
@@ -82,16 +79,6 @@ public class DonutProgress extends View {
     private static final String INSTANCE_STARTING_DEGREE = "starting_degree";
     private static final String INSTANCE_INNER_DRAWABLE = "inner_drawable";
 
-    /**
-     * decimalformat for formatting
-     */
-    protected DecimalFormat mFormat;
-
-    /**
-     * the number of decimal digits this formatter uses
-     */
-    protected int digits = 0;
-
     public DonutProgress(Context context) {
         this(context, null);
     }
@@ -113,22 +100,6 @@ public class DonutProgress extends View {
         attributes.recycle();
 
         initPainters();
-        setFormatter();
-    }
-
-    public void setFloatingPoint(int digits){
-        this.digits = digits;
-        setFormatter();
-    }
-
-    private void setFormatter() {
-        StringBuilder b = new StringBuilder();
-        for (int i = 0; i < digits; i++) {
-            if (i == 0)
-                b.append(".");
-            b.append("0");
-        }
-        mFormat = new DecimalFormat("###,###,###,##0" + b.toString());
     }
 
     protected void initPainters() {
@@ -195,8 +166,10 @@ public class DonutProgress extends View {
         innerBottomText = attributes.getString(R.styleable.DonutProgress_donut_inner_bottom_text);
 
         startingDegree = attributes.getInt(R.styleable.DonutProgress_donut_circle_starting_degree, default_startingDegree);
-        digits = attributes.getInt(R.styleable.DonutProgress_donut_digits, 0);
         innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
+
+        digits = attributes.getInt(R.styleable.CircleProgress_progress_digits, 0);
+        setFormatter();
     }
 
     @Override
