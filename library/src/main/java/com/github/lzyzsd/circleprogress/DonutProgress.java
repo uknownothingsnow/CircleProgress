@@ -195,6 +195,7 @@ public class DonutProgress extends View {
         innerBottomText = attributes.getString(R.styleable.DonutProgress_donut_inner_bottom_text);
 
         startingDegree = attributes.getInt(R.styleable.DonutProgress_donut_circle_starting_degree, default_startingDegree);
+        digits = attributes.getInt(R.styleable.DonutProgress_donut_digits, 0);
         innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
     }
 

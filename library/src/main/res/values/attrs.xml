@@ -17,6 +17,7 @@
     <declare-styleable name="DonutProgress">
         <attr name="donut_progress" format="float"/>
         <attr name="donut_max" format="integer"/>
+        <attr name="donut_digits" format="integer"/>
 
         <attr name="donut_unfinished_color" format="color"/>
         <attr name="donut_finished_color" format="color"/>
