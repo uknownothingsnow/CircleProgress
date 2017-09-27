@@ -84,7 +84,7 @@ public class CircleProgress extends BaseProgress {
             setSuffixText(attributes.getString(R.styleable.CircleProgress_circle_suffix_text));
         }
 
-        digits = attributes.getInt(R.styleable.CircleProgress_progress_digits, 0);
+        digits = attributes.getInt(R.styleable.CircleProgress_circle_progress_digits, 0);
         setFormatter();
     }
 

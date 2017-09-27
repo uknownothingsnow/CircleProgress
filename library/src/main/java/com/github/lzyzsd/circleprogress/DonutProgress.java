@@ -168,7 +168,7 @@ public class DonutProgress extends BaseProgress {
         startingDegree = attributes.getInt(R.styleable.DonutProgress_donut_circle_starting_degree, default_startingDegree);
         innerBackgroundColor = attributes.getColor(R.styleable.DonutProgress_donut_background_color, default_inner_background_color);
 
-        digits = attributes.getInt(R.styleable.CircleProgress_progress_digits, 0);
+        digits = attributes.getInt(R.styleable.DonutProgress_donut_progress_digits, 0);
         setFormatter();
     }
 

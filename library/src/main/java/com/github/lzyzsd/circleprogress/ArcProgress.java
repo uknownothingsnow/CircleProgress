@@ -107,7 +107,7 @@ public class ArcProgress extends BaseProgress {
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
 
-        digits = attributes.getInt(R.styleable.CircleProgress_progress_digits, 0);
+        digits = attributes.getInt(R.styleable.ArcProgress_arc_progress_digits, 0);
         setFormatter();
     }
 
