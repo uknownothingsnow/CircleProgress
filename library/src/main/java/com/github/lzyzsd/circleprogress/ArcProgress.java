@@ -27,7 +27,6 @@ public class ArcProgress extends BaseProgress {
     private String bottomText;
     private float textSize;
     private int textColor;
-    private float progress = 0;
     private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;

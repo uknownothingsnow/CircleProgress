@@ -33,7 +33,6 @@ public class DonutProgress extends BaseProgress {
     private float textSize;
     private int textColor;
     private int innerBottomTextColor;
-    private float progress = 0;
     private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;

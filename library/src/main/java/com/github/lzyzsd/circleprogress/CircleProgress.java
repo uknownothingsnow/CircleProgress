@@ -21,7 +21,6 @@ public class CircleProgress extends BaseProgress {
 
     private float textSize;
     private int textColor;
-    private float progress = 0;
     private int max;
     private int finishedColor;
     private int unfinishedColor;
@@ -46,6 +45,7 @@ public class CircleProgress extends BaseProgress {
     private static final String INSTANCE_PREFIX = "prefix";
 
     private Paint paint = new Paint();
+    private boolean hideProgressText;
 
     public CircleProgress(Context context) {
         this(context, null);
@@ -73,6 +73,7 @@ public class CircleProgress extends BaseProgress {
         unfinishedColor = attributes.getColor(R.styleable.CircleProgress_circle_unfinished_color, default_unfinished_color);
         textColor = attributes.getColor(R.styleable.CircleProgress_circle_text_color, default_text_color);
         textSize = attributes.getDimension(R.styleable.CircleProgress_circle_text_size, default_text_size);
+        hideProgressText = attributes.getBoolean(R.styleable.CircleProgress_circle_progress_hide, false);
 
         setMax(attributes.getInt(R.styleable.CircleProgress_circle_max, default_max));
         setProgress(attributes.getFloat(R.styleable.CircleProgress_circle_progress, 0));
@@ -181,7 +182,7 @@ public class CircleProgress extends BaseProgress {
     }
 
     public String getDrawText() {
-        return getPrefixText() + getProgress() + getSuffixText();
+        return !hideProgressText ? getPrefixText() + getProgress() + getSuffixText() : null;
     }
 
     @Override
@@ -209,9 +210,9 @@ public class CircleProgress extends BaseProgress {
         float radius = getWidth() / 2f;
         float angle = (float) (Math.acos((radius - yHeight) / radius) * 180 / Math.PI);
         float startAngle = 90 + angle;
-        float sweepAngle = 360 - angle * 2;
+        float sweepAngle = (angle * 2) %360;
         paint.setColor(getUnfinishedColor());
-        canvas.drawArc(rectF, startAngle, sweepAngle, false, paint);
+        canvas.drawArc(rectF, angle, sweepAngle, false, paint);
 
         canvas.save();
         canvas.rotate(180, getWidth() / 2, getHeight() / 2);

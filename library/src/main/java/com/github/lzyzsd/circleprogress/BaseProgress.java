@@ -1,9 +1,12 @@
 package com.github.lzyzsd.circleprogress;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import java.text.DecimalFormat;
 
@@ -16,6 +19,8 @@ public abstract class BaseProgress extends View{
      * decimalformat for formatting
      */
     protected DecimalFormat mFormat;
+    protected float progress;
+    private ObjectAnimator objectAnimator;
 
     /**
      * the number of decimal digits this formatter uses
@@ -49,4 +54,34 @@ public abstract class BaseProgress extends View{
         }
         mFormat = new DecimalFormat("###,###,###,##0" + b.toString());
     }
+
+    /**
+     * Set progress with animation.
+     * @param progress end progress
+     * @param duration time for animation.
+     */
+    public void setProgressWithAnimation(float progress, int duration) {
+        setProgressWithAnimation(getProgress(),progress,duration,null);
+    }
+
+    public void setProgressWithAnimation(float progress, int duration, Animator.AnimatorListener listener) {
+        setProgressWithAnimation(getProgress(),progress,duration,listener);
+    }
+    public void setProgressWithAnimation(float startProgress,float endProgress, int duration, Animator.AnimatorListener listener) {
+        cancelAnimation(); // Clear previous animation if exist.
+        objectAnimator = ObjectAnimator.ofFloat(this, "progress",startProgress,endProgress);
+        objectAnimator.setDuration(duration);
+        objectAnimator.addListener(listener);
+        objectAnimator.setInterpolator(new DecelerateInterpolator());
+        objectAnimator.start();
+    }
+
+
+    public void cancelAnimation(){
+        if (objectAnimator !=null && objectAnimator.isRunning())
+            objectAnimator.cancel();
+    }
+
+    abstract void setProgress(float progress);
+    abstract float getProgress();
 }
