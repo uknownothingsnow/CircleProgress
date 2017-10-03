@@ -20,6 +20,7 @@ public abstract class BaseProgress extends View{
      */
     protected DecimalFormat mFormat;
     protected float progress;
+    protected int max;
     private ObjectAnimator objectAnimator;
 
     /**
@@ -82,6 +83,30 @@ public abstract class BaseProgress extends View{
             objectAnimator.cancel();
     }
 
-    abstract void setProgress(float progress);
-    abstract float getProgress();
+    public void setProgress(float progress) {
+        this.progress = progress;
+        if (this.progress > getMax()) {
+            this.progress %= getMax();
+        }
+        invalidate();
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        if (max > 0) {
+            this.max = max;
+            invalidate();
+        }
+    }
+
+    public float getProgress() {
+        try {
+            return Float.parseFloat(mFormat.format(progress));
+        }catch (Exception ex){
+            return progress;
+        }
+    }
 }

@@ -207,29 +207,6 @@ public class DonutProgress extends BaseProgress {
         return getProgress() / (float) max * 360f;
     }
 
-    public float getProgress() {
-        return progress;
-    }
-
-    public void setProgress(float progress) {
-        this.progress = progress;
-        if (this.progress > getMax()) {
-            this.progress %= getMax();
-        }
-        invalidate();
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        if (max > 0) {
-            this.max = max;
-            invalidate();
-        }
-    }
-
     public float getTextSize() {
         return textSize;
     }
@@ -391,7 +368,7 @@ public class DonutProgress extends BaseProgress {
         canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
         if (showText) {
-            String text = this.text != null ? this.text : prefixText + mFormat.format(progress) + suffixText;
+            String text = this.text != null ? this.text : prefixText + getProgress() + suffixText;
             if (!TextUtils.isEmpty(text)) {
                 float textHeight = textPaint.descent() + textPaint.ascent();
                 canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);

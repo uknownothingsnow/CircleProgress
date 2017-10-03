@@ -104,29 +104,6 @@ public class CircleProgress extends BaseProgress {
         super.invalidate();
     }
 
-    public float getProgress() {
-        return Float.parseFloat(mFormat.format(progress));
-    }
-
-    public void setProgress(float progress) {
-        this.progress = progress;
-        if (this.progress > getMax()) {
-            this.progress %= getMax();
-        }
-        invalidate();
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        if (max > 0) {
-            this.max = max;
-            invalidate();
-        }
-    }
-
     public float getTextSize() {
         return textSize;
     }
