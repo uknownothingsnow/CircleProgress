@@ -60,6 +60,7 @@ public class DonutProgress extends View {
     private final float default_text_size;
     private final float default_inner_bottom_text_size;
     private final int min_size;
+    private boolean clockWise;
 
 
     private static final String INSTANCE_STATE = "saved_instance";
@@ -144,6 +145,7 @@ public class DonutProgress extends View {
         setProgress(attributes.getFloat(R.styleable.DonutProgress_donut_progress, 0));
         finishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_finished_stroke_width, default_stroke_width);
         unfinishedStrokeWidth = attributes.getDimension(R.styleable.DonutProgress_donut_unfinished_stroke_width, default_stroke_width);
+        clockWise = attributes.getBoolean(R.styleable.DonutProgress_donut_clockWise, false);
 
         if (showText) {
             if (attributes.getString(R.styleable.DonutProgress_donut_prefix_text) != null) {
@@ -387,8 +389,13 @@ public class DonutProgress extends View {
 
         float innerCircleRadius = (getWidth() - Math.min(finishedStrokeWidth, unfinishedStrokeWidth) + Math.abs(finishedStrokeWidth - unfinishedStrokeWidth)) / 2f;
         canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, innerCircleRadius, innerCirclePaint);
-        canvas.drawArc(finishedOuterRect, getStartingDegree(), getProgressAngle(), false, finishedPaint);
-        canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
+        if (!clockWise) {
+            canvas.drawArc(finishedOuterRect, -(360f - getStartingDegree()), -(getProgressAngle()), false, finishedPaint);
+            canvas.drawArc(unfinishedOuterRect, -(360f - getStartingDegree()) - getProgressAngle(), -(360f - getProgressAngle()), false, unfinishedPaint);
+        } else {
+            canvas.drawArc(finishedOuterRect, getStartingDegree(), getProgressAngle(), false, finishedPaint);
+            canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
+        }
 
         if (showText) {
             String text = this.text != null ? this.text : prefixText + progress + suffixText;
