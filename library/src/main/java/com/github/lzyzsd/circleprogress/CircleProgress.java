@@ -21,7 +21,6 @@ public class CircleProgress extends BaseProgress {
 
     private float textSize;
     private int textColor;
-    private int max;
     private int finishedColor;
     private int unfinishedColor;
     private String prefixText = "";

@@ -103,6 +103,10 @@ public abstract class BaseProgress extends View{
     }
 
     public float getProgress() {
+        return progress;
+    }
+
+    public float getFormattedProgress() {
         try {
             return Float.parseFloat(mFormat.format(progress));
         }catch (Exception ex){

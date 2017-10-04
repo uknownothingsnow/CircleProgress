@@ -33,7 +33,6 @@ public class DonutProgress extends BaseProgress {
     private float textSize;
     private int textColor;
     private int innerBottomTextColor;
-    private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
     private int startingDegree;
@@ -368,7 +367,7 @@ public class DonutProgress extends BaseProgress {
         canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
 
         if (showText) {
-            String text = this.text != null ? this.text : prefixText + getProgress() + suffixText;
+            String text = this.text != null ? this.text : prefixText + mFormat.format(progress) + suffixText;
             if (!TextUtils.isEmpty(text)) {
                 float textHeight = textPaint.descent() + textPaint.ascent();
                 canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, (getWidth() - textHeight) / 2.0f, textPaint);
