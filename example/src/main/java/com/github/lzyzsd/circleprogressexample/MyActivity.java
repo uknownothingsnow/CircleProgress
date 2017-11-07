@@ -1,8 +1,5 @@
 package com.github.lzyzsd.circleprogressexample;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
@@ -10,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.DecelerateInterpolator;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.github.lzyzsd.circleprogress.CircleProgress;
@@ -54,18 +50,7 @@ public class MyActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        boolean a = false;
-                        if (a) {
-                            ObjectAnimator anim = ObjectAnimator.ofInt(donutProgress, "progress", 0, 10);
-                            anim.setInterpolator(new DecelerateInterpolator());
-                            anim.setDuration(500);
-                            anim.start();
-                        } else {
-                            AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MyActivity.this, R.animator.progress_anim);
-                            set.setInterpolator(new DecelerateInterpolator());
-                            set.setTarget(donutProgress);
-                            set.start();
-                        }
+                        donutProgress.setProgressWithAnimation(0,100,1000,null);
                     }
                 });
             }

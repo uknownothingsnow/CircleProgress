@@ -2,8 +2,10 @@ package com.github.lzyzsd.circleprogress;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -68,16 +70,20 @@ public abstract class BaseProgress extends View{
     public void setProgressWithAnimation(float progress, int duration, Animator.AnimatorListener listener) {
         setProgressWithAnimation(getProgress(),progress,duration,listener);
     }
-    public void setProgressWithAnimation(float startProgress,float endProgress, int duration, Animator.AnimatorListener listener) {
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void setProgressWithAnimation(float startProgress, float endProgress, int duration, Animator.AnimatorListener listener) {
         cancelAnimation(); // Clear previous animation if exist.
         objectAnimator = ObjectAnimator.ofFloat(this, "progress",startProgress,endProgress);
         objectAnimator.setDuration(duration);
-        objectAnimator.addListener(listener);
+        if (listener !=null)
+            objectAnimator.addListener(listener);
         objectAnimator.setInterpolator(new DecelerateInterpolator());
         objectAnimator.start();
     }
 
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void cancelAnimation(){
         if (objectAnimator !=null && objectAnimator.isRunning())
             objectAnimator.cancel();
