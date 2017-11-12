@@ -7,7 +7,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
@@ -19,7 +19,8 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MyActivity extends ActionBarActivity {
+public class MyActivity extends AppCompatActivity
+{
     private Timer timer;
     private DonutProgress donutProgress;
     private CircleProgress circleProgress;
@@ -27,7 +28,8 @@ public class MyActivity extends ActionBarActivity {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         donutProgress = (DonutProgress) findViewById(R.id.donut_progress);
@@ -48,20 +50,29 @@ public class MyActivity extends ActionBarActivity {
         animator.start();*/
 
         timer = new Timer();
-        timer.schedule(new TimerTask() {
+        timer.schedule(new TimerTask()
+        {
             @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
+            public void run()
+            {
+                runOnUiThread(new Runnable()
+                {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         boolean a = false;
-                        if (a) {
-                            ObjectAnimator anim = ObjectAnimator.ofInt(donutProgress, "progress", 0, 10);
+                        if (a)
+                        {
+                            ObjectAnimator anim = ObjectAnimator
+                                    .ofInt(donutProgress, "progress", 0, 10);
                             anim.setInterpolator(new DecelerateInterpolator());
                             anim.setDuration(500);
                             anim.start();
-                        } else {
-                            AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(MyActivity.this, R.animator.progress_anim);
+                        }
+                        else
+                        {
+                            AnimatorSet set = (AnimatorSet) AnimatorInflater
+                                    .loadAnimator(MyActivity.this, R.animator.progress_anim);
                             set.setInterpolator(new DecelerateInterpolator());
                             set.setTarget(donutProgress);
                             set.start();
@@ -73,21 +84,25 @@ public class MyActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
         timer.cancel();
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.my, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
             case R.id.action_viewpager:
                 startActivity(new Intent(this, ViewPagerActivity.class));
                 return true;
