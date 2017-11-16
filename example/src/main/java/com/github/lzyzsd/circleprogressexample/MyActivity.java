@@ -50,11 +50,11 @@ public class MyActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        donutProgress.setProgressWithAnimation(0,100,1000,null);
+                        donutProgress.setProgressWithAnimation(0,100,3000,null);
                     }
                 });
             }
-        }, 0, 2000);
+        }, 0, 5000);
     }
 
     @Override
