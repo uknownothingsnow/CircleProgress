@@ -158,7 +158,7 @@ public class CircleProgress extends BaseProgress {
     }
 
     public String getDrawText() {
-        return !hideProgressText ? getPrefixText() + getProgress() + getSuffixText() : null;
+        return !hideProgressText ? getPrefixText() + mFormat.format(progress) + getSuffixText() : null;
     }
 
     @Override

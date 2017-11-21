@@ -11,8 +11,18 @@
     <!--custom:donut_inner_drawable="@drawable/ic_star_black_48dp"-->
     <!--custom:donut_show_text="false"-->
 
+    <com.github.lzyzsd.circleprogress.CircleProgress
+        android:id="@+id/circle_progress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        custom:circle_finished_color="#0066FF"
+        custom:circle_progress="70"
+        custom:circle_unfinished_color="@color/primary_material_light" />
+
     <com.github.lzyzsd.circleprogress.DonutProgress
         android:id="@+id/donut_progress"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         custom:donut_finished_color="#0066FF"
@@ -21,5 +31,13 @@
         android:backgroundTintMode="add"
         custom:donut_unfinished_color="@color/primary_material_light"
         custom:donut_unfinished_stroke_width="15dp" />
+
+
+    <com.github.lzyzsd.circleprogress.ArcProgress
+        android:id="@+id/arc_progress"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        custom:arc_progress="50"
+        custom:arc_unfinished_color="#0066FF" />
 
 </LinearLayout>
