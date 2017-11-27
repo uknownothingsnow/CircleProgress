@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 27
+
     defaultConfig {
         minSdkVersion 14
+        //noinspection OldTargetApi
         targetSdkVersion 26
         versionCode 2
         versionName "1.0.1"
@@ -18,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile project(':library')
-    compile 'com.android.support:appcompat-v7:26.0.0'
-    compile 'com.android.support:support-v4:26.0.0'
+    implementation project(':library')
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
 }

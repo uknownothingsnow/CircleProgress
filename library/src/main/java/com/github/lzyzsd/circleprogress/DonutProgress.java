@@ -15,7 +15,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by bruce on 14-10-30.
+ * Used to display "Donut Progress" (circular progress).
+ * Accepts an inner drawable (can be a supports vector drawables).
  */
 public class DonutProgress extends View
 {

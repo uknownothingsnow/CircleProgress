@@ -3,6 +3,7 @@ package com.github.lzyzsd.circleprogressexample;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
@@ -31,7 +32,7 @@ public class MyActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_my_vector);
         donutProgress = (DonutProgress) findViewById(R.id.donut_progress);
 
         /*AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.progress_anim2);
@@ -63,6 +64,7 @@ public class MyActivity extends AppCompatActivity
                         boolean a = false;
                         if (a)
                         {
+                            @SuppressLint("ObjectAnimatorBinding")
                             ObjectAnimator anim = ObjectAnimator
                                     .ofInt(donutProgress, "progress", 0, 10);
                             anim.setInterpolator(new DecelerateInterpolator());

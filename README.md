@@ -1,7 +1,5 @@
 [![Android Arsenal](https://img.shields.io/badge/Android+Arsenal-CircleProgress-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1130)
 
-A Fork of [https://github.com/lzyzsd/CircleProgress](https://github.com/lzyzsd/CircleProgress) to support `VectorDrawable` and other updates.
-
 inspired from
 [https://github.com/daimajia/NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 
@@ -15,7 +13,7 @@ and CleanMaster
 
 ###Demo download [link](https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/example.apk)
 
-###3 kinds of progress view are provided, DonutProgress, CircleProgress, ArcProgress
+###3 kinds of progress view are provided, DonutProgress (supports inner drawables and VectorDrawables, CircleProgress, ArcProgress
 
 ##Usage
 
@@ -34,7 +32,7 @@ please use jitpack
 
 ```groovy
 dependencies {
-    compile 'com.github.JimVanG:donutprogress:1.2.3'
+    compile 'com.github.lzyzsd:circleprogress:1.2.4'
 }
 ```
 
@@ -51,6 +49,20 @@ DonutProgress
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         custom:donut_progress="30"/>
+```
+
+```xml
+    <com.github.lzyzsd.circleprogress.DonutProgress
+        android:layout_marginLeft="50dp"
+        android:id="@+id/donut_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:donut_finished_color="#0066FF"
+        custom:donut_finished_stroke_width="15dp"
+        custom:donut_inner_drawable="@drawable/ic_vector_star_black_48dp"
+        custom:donut_show_text="false"
+        custom:donut_unfinished_color="#f5f5f5"
+        custom:donut_unfinished_stroke_width="15dp"/>
 ```
 
 ![DonutProgress](https://raw.githubusercontent.com/lzyzsd/CircleProgress/master/demos/donutprogress_demo.png)
@@ -140,11 +152,12 @@ attrs for ArchProgress
 
 donut_inner_drawable
 
-support add a drawable to the center (now supports `VectorDrawable`s)
+support add a drawable/vectorDrawable to the center
 
 donut_show_text
 
 show or hide bottom text
+
 
 ###Build
 
