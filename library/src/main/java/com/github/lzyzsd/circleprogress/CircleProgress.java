@@ -125,8 +125,12 @@ public class CircleProgress extends View {
 
     public void setDefaultText(){
         text = null;
+        invalidate();
     }
 
+    /**
+     *   Setting Central Text to custom String
+     */
     public void setText(String text){
         this.text = text;
         invalidate();

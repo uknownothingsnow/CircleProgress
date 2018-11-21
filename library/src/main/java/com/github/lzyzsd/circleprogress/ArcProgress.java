@@ -194,13 +194,20 @@ public class ArcProgress extends View {
 
     public String getText(){ return text; }
 
+    /**
+     *   Setting Central Text to custom String
+     */
     public void setText(String text){
         this.text = text;
         this.invalidate();
     }
 
+    /**
+     *   Setting Central Text back to default one (value of the progress)
+     */
     public void setDefaultText(){
         text = String.valueOf(getProgress());
+        invalidate();
     }
 
     public float getTextSize() {
