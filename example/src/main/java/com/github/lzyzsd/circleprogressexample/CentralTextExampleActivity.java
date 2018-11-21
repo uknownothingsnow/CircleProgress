@@ -9,12 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
+import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 public class CentralTextExampleActivity extends ActionBarActivity {
 
     ArcProgress arcProgress;
-    DonutProgress donutProgress;
+    CircleProgress circleProgress;
     EditText editText;
 
     @Override
@@ -27,9 +28,8 @@ public class CentralTextExampleActivity extends ActionBarActivity {
         arcProgress.setSuffixText("°C");
         arcProgress.setProgress(25);
 
-        donutProgress = findViewById(R.id.donut_progress);
-        donutProgress.setSuffixText("*7");
-        donutProgress.setProgress(75);
+        circleProgress = findViewById(R.id.donut_progress);
+        circleProgress.setProgress(75);
 
         editText = findViewById(R.id.editText);
     }
@@ -37,8 +37,8 @@ public class CentralTextExampleActivity extends ActionBarActivity {
     public void setCustomText(View view){
         if(String.valueOf(editText.getText()) != null || !String.valueOf(editText.getText()).equals("")) {
             arcProgress.setText(String.valueOf(editText.getText()));
-            donutProgress.setText(String.valueOf(editText.getText()));
-            donutProgress.setSuffixText("*7");
+            circleProgress.setCentralText(String.valueOf(editText.getText()));
+            circleProgress.setSuffixText("*7");
         } else{
             Toast.makeText(this, "Field should not be empty!", Toast.LENGTH_SHORT).show();
         }

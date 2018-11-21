@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <com.github.lzyzsd.circleprogress.DonutProgress
+    <com.github.lzyzsd.circleprogress.CircleProgress
         android:id="@+id/donut_progress"
         android:layout_width="0dp"
         android:layout_height="0dp"

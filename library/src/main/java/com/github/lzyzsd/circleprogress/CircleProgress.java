@@ -23,6 +23,7 @@ public class CircleProgress extends View {
     private float textSize;
     private int textColor;
     private int progress = 0;
+    private String text;
     private int max;
     private int finishedColor;
     private int unfinishedColor;
@@ -101,9 +102,7 @@ public class CircleProgress extends View {
         super.invalidate();
     }
 
-    public int getProgress() {
-        return progress;
-    }
+    public int getProgress() { return progress; }
 
     public void setProgress(int progress) {
         this.progress = progress;
@@ -122,6 +121,21 @@ public class CircleProgress extends View {
             this.max = max;
             invalidate();
         }
+    }
+
+    public void setDefaultText(){
+        text = null;
+    }
+
+    public void setCentralText(String text){
+        this.text = text;
+        invalidate();
+    }
+
+    public String getCentralText() {
+        if (text != null) {
+            return text;
+        } else return String.valueOf(progress);
     }
 
     public float getTextSize() {
@@ -179,7 +193,7 @@ public class CircleProgress extends View {
     }
 
     public String getDrawText() {
-        return getPrefixText() + getProgress() + getSuffixText();
+        return getPrefixText() + getCentralText() + getSuffixText();
     }
 
     @Override
