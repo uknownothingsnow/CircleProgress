@@ -127,12 +127,12 @@ public class CircleProgress extends View {
         text = null;
     }
 
-    public void setCentralText(String text){
+    public void setText(String text){
         this.text = text;
         invalidate();
     }
 
-    public String getCentralText() {
+    public String getText() {
         if (text != null) {
             return text;
         } else return String.valueOf(progress);
@@ -193,7 +193,7 @@ public class CircleProgress extends View {
     }
 
     public String getDrawText() {
-        return getPrefixText() + getCentralText() + getSuffixText();
+        return getPrefixText() + getText() + getSuffixText();
     }
 
     @Override

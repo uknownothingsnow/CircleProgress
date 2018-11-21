@@ -37,8 +37,7 @@ public class CentralTextExampleActivity extends ActionBarActivity {
     public void setCustomText(View view){
         if(String.valueOf(editText.getText()) != null || !String.valueOf(editText.getText()).equals("")) {
             arcProgress.setText(String.valueOf(editText.getText()));
-            circleProgress.setCentralText(String.valueOf(editText.getText()));
-            circleProgress.setSuffixText("*7");
+            circleProgress.setText(String.valueOf(editText.getText()));
         } else{
             Toast.makeText(this, "Field should not be empty!", Toast.LENGTH_SHORT).show();
         }
