@@ -28,6 +28,7 @@ public class ArcProgress extends View {
     private float suffixTextSize;
     private float bottomTextSize;
     private String bottomText;
+    private String text;
     private float textSize;
     private int textColor;
     private float progress = 0;
@@ -191,6 +192,24 @@ public class ArcProgress extends View {
         this.invalidate();
     }
 
+    public String getText(){ return text; }
+
+    /**
+     *   Setting Central Text to custom String
+     */
+    public void setText(String text){
+        this.text = text;
+        this.invalidate();
+    }
+
+    /**
+     *   Setting Central Text back to default one (value of the progress)
+     */
+    public void setDefaultText(){
+        text = String.valueOf(getProgress());
+        invalidate();
+    }
+
     public float getTextSize() {
         return textSize;
     }
@@ -286,7 +305,10 @@ public class ArcProgress extends View {
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
-        String text = String.valueOf(getProgress());
+        if(text == null){
+            text = String.valueOf(getProgress());
+        }
+
         if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
