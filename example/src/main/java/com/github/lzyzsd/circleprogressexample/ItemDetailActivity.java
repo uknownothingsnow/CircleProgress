@@ -2,8 +2,8 @@ package com.github.lzyzsd.circleprogressexample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
@@ -16,10 +16,12 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends ActionBarActivity {
+public class ItemDetailActivity extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
@@ -35,24 +37,27 @@ public class ItemDetailActivity extends ActionBarActivity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null)
+        {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
+                                getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                .add(R.id.item_detail_container, fragment)
-                .commit();
+                    .add(R.id.item_detail_container, fragment)
+                    .commit();
         }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
+        if (id == android.R.id.home)
+        {
             // This ID represents the Home or Up button. In the case of this
             // activity, the Up button is shown. Use NavUtils to allow users
             // to navigate up one level in the application structure. For
