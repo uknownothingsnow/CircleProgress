@@ -149,7 +149,6 @@ attrs for ArchProgress
     </declare-styleable>
 ```
 
-
 donut_inner_drawable
 
 support add a drawable/vectorDrawable to the center
@@ -157,7 +156,6 @@ support add a drawable/vectorDrawable to the center
 donut_show_text
 
 show or hide bottom text
-
 
 ###Build
 
@@ -167,21 +165,22 @@ or
 
 run `gradlew.bat assembleDebug` (Windows)
 
-
 ###Changes
 
 version 1.1.0: add bottom text to DonutProgressView
 
 DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-                    Version 2, December 2004
+Version 2, December 2004
 
- Copyright (C) 2014 Bruce Lee <bruceinpeking#gmail.com>
+Copyright (C) 2014 Bruce Lee <bruceinpeking#gmail.com>
 
- Everyone is permitted to copy and distribute verbatim or modified
- copies of this license document, and changing it is allowed as long
- as the name is changed.
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
 
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
-  0. You just DO WHAT THE FUCK YOU WANT TO.
+
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. You just DO WHAT THE FUCK YOU WANT TO.

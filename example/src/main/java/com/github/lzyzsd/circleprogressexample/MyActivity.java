@@ -114,6 +114,9 @@ public class MyActivity extends AppCompatActivity
             case R.id.action_arch_tab:
                 startActivity(new Intent(this, ArcInFragment.class));
                 return true;
+            case R.id.action_change_central_text:
+                startActivity(new Intent(this, CentralTextExampleActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
