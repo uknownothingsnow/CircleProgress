@@ -1,21 +1,28 @@
 apply plugin: 'com.android.library'
 
-version = "1.2.0"
+version = "1.2.4"
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 21
+        minSdkVersion 14
+        //noinspection OldTargetApi
+        targetSdkVersion 26
         versionCode 5
         versionName version
+
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dependencies {
+        compile 'com.android.support:appcompat-v7:27.0.1'
     }
 }

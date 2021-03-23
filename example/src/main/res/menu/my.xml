@@ -16,4 +16,10 @@
           android:title="@string/action_arc_tab"
           android:orderInCategory="100"
           app:showAsAction="never" />
+
+    <item android:id="@+id/action_change_central_text"
+        android:title="@string/action_change_central_text"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>

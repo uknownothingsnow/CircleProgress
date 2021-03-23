@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.lzyzsd.circleprogressexample" >
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.github.lzyzsd.circleprogressexample">
 
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
         <activity
-            android:name=".MyActivity"
-            android:label="@string/app_name" >
+                android:name=".MyActivity"
+                android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ViewPagerActivity" />
+        <activity android:name=".ViewPagerActivity"/>
         <activity
-            android:name=".ItemListActivity"
-            android:label="@string/title_item_list" >
+                android:name=".ItemListActivity"
+                android:label="@string/title_item_list">
         </activity>
         <activity
-            android:name=".ItemDetailActivity"
-            android:label="@string/title_item_detail"
-            android:parentActivityName=".ItemListActivity" >
+                android:name=".ItemDetailActivity"
+                android:label="@string/title_item_detail"
+                android:parentActivityName=".ItemListActivity" tools:ignore="UnusedAttribute">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.github.lzyzsd.circleprogressexample.ItemListActivity" />
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.github.lzyzsd.circleprogressexample.ItemListActivity"/>
         </activity>
         <activity
-            android:name=".ArcInFragment"
-            android:label="@string/title_activity_arc_in_fragment" >
+                android:name=".ArcInFragment"
+                android:label="@string/title_activity_arc_in_fragment">
         </activity>
     </application>
 
