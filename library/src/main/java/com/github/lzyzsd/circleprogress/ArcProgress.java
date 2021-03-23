@@ -24,6 +24,8 @@ public class ArcProgress extends View {
 
     private RectF rectF = new RectF();
 
+
+
     private float strokeWidth;
     private float suffixTextSize;
     private float bottomTextSize;
@@ -31,6 +33,7 @@ public class ArcProgress extends View {
     private String text;
     private float textSize;
     private int textColor;
+    private int currentProgress = 0;
     private float progress = 0;
     private int max;
     private int finishedStrokeColor;
@@ -169,8 +172,12 @@ public class ArcProgress extends View {
         if (this.progress > getMax()) {
             this.progress %= getMax();
         }
+        currentProgress = 0;
         invalidate();
     }
+
+
+
 
     public int getMax() {
         return max;
@@ -297,7 +304,7 @@ public class ArcProgress extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float startAngle = 270 - arcAngle / 2f;
-        float finishedSweepAngle = progress / (float) getMax() * arcAngle;
+        float finishedSweepAngle = currentProgress / (float) getMax() * arcAngle;
         float finishedStartAngle = startAngle;
         if(progress == 0) finishedStartAngle = 0.01f;
         paint.setColor(unfinishedStrokeColor);
@@ -305,10 +312,7 @@ public class ArcProgress extends View {
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
-        if(text == null){
-            text = String.valueOf(getProgress());
-        }
-
+        String text = String.valueOf(currentProgress);
         if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
@@ -330,6 +334,10 @@ public class ArcProgress extends View {
             textPaint.setTextSize(bottomTextSize);
             float bottomTextBaseline = getHeight() - arcBottomHeight - (textPaint.descent() + textPaint.ascent()) / 2;
             canvas.drawText(getBottomText(), (getWidth() - textPaint.measureText(getBottomText())) / 2.0f, bottomTextBaseline, textPaint);
+        }
+        if (currentProgress < progress) {
+            currentProgress++;
+            invalidate();
         }
     }
 
