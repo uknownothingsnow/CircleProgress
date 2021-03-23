@@ -14,8 +14,9 @@
     <string name="title_activity_arc_in_fragment">ArcInFragment</string>
     <string name="action_settings">Settings</string>
     <string name="action_arc_tab">Arc Fragment</string>
+    <string name="action_change_central_text">Change Central Text Fragment</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

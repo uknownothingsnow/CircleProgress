@@ -15,7 +15,7 @@
             custom:donut_finished_stroke_width="15dp"
             android:backgroundTint="#0066FF"
             android:backgroundTintMode="add"
-            custom:donut_inner_drawable="@drawable/ic_star_black_48dp"
+            custom:donut_inner_drawable="@drawable/ic_vector_star_black_48dp"
             custom:donut_show_text="false"
             custom:donut_unfinished_color="#f5f5f5"
             custom:donut_unfinished_stroke_width="15dp"/>

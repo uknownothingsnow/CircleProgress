@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by bruce on 11/6/14.
  */
@@ -28,10 +30,11 @@ public class ArcProgress extends View {
     private float suffixTextSize;
     private float bottomTextSize;
     private String bottomText;
+    private String text;
     private float textSize;
     private int textColor;
-    private int progress = 0;
     private int currentProgress = 0;
+    private float progress = 0;
     private int max;
     private int finishedStrokeColor;
     private int unfinishedStrokeColor;
@@ -103,7 +106,7 @@ public class ArcProgress extends View {
         textSize = attributes.getDimension(R.styleable.ArcProgress_arc_text_size, default_text_size);
         arcAngle = attributes.getFloat(R.styleable.ArcProgress_arc_angle, default_arc_angle);
         setMax(attributes.getInt(R.styleable.ArcProgress_arc_max, default_max));
-        setProgress(attributes.getInt(R.styleable.ArcProgress_arc_progress, 0));
+        setProgress(attributes.getFloat(R.styleable.ArcProgress_arc_progress, 0));
         strokeWidth = attributes.getDimension(R.styleable.ArcProgress_arc_stroke_width, default_stroke_width);
         suffixTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_size, default_suffix_text_size);
         suffixText = TextUtils.isEmpty(attributes.getString(R.styleable.ArcProgress_arc_suffix_text)) ? default_suffix_text : attributes.getString(R.styleable.ArcProgress_arc_suffix_text);
@@ -159,12 +162,13 @@ public class ArcProgress extends View {
         this.invalidate();
     }
 
-    public int getProgress() {
+    public float getProgress() {
         return progress;
     }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
+    public void setProgress(float progress) {
+        this.progress = Float.valueOf(new DecimalFormat("#.##").format(progress));
+
         if (this.progress > getMax()) {
             this.progress %= getMax();
         }
@@ -193,6 +197,24 @@ public class ArcProgress extends View {
     public void setBottomTextSize(float bottomTextSize) {
         this.bottomTextSize = bottomTextSize;
         this.invalidate();
+    }
+
+    public String getText(){ return text; }
+
+    /**
+     *   Setting Central Text to custom String
+     */
+    public void setText(String text){
+        this.text = text;
+        this.invalidate();
+    }
+
+    /**
+     *   Setting Central Text back to default one (value of the progress)
+     */
+    public void setDefaultText(){
+        text = String.valueOf(getProgress());
+        invalidate();
     }
 
     public float getTextSize() {
@@ -284,6 +306,7 @@ public class ArcProgress extends View {
         float startAngle = 270 - arcAngle / 2f;
         float finishedSweepAngle = currentProgress / (float) getMax() * arcAngle;
         float finishedStartAngle = startAngle;
+        if(progress == 0) finishedStartAngle = 0.01f;
         paint.setColor(unfinishedStrokeColor);
         canvas.drawArc(rectF, startAngle, arcAngle, false, paint);
         paint.setColor(finishedStrokeColor);
@@ -329,7 +352,7 @@ public class ArcProgress extends View {
         bundle.putString(INSTANCE_BOTTOM_TEXT, getBottomText());
         bundle.putFloat(INSTANCE_TEXT_SIZE, getTextSize());
         bundle.putInt(INSTANCE_TEXT_COLOR, getTextColor());
-        bundle.putInt(INSTANCE_PROGRESS, getProgress());
+        bundle.putFloat(INSTANCE_PROGRESS, getProgress());
         bundle.putInt(INSTANCE_MAX, getMax());
         bundle.putInt(INSTANCE_FINISHED_STROKE_COLOR, getFinishedStrokeColor());
         bundle.putInt(INSTANCE_UNFINISHED_STROKE_COLOR, getUnfinishedStrokeColor());
@@ -350,7 +373,7 @@ public class ArcProgress extends View {
             textSize = bundle.getFloat(INSTANCE_TEXT_SIZE);
             textColor = bundle.getInt(INSTANCE_TEXT_COLOR);
             setMax(bundle.getInt(INSTANCE_MAX));
-            setProgress(bundle.getInt(INSTANCE_PROGRESS));
+            setProgress(bundle.getFloat(INSTANCE_PROGRESS));
             finishedStrokeColor = bundle.getInt(INSTANCE_FINISHED_STROKE_COLOR);
             unfinishedStrokeColor = bundle.getInt(INSTANCE_UNFINISHED_STROKE_COLOR);
             suffixText = bundle.getString(INSTANCE_SUFFIX);
