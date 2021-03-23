@@ -62,6 +62,7 @@ public class DonutProgress extends View
     private final float default_text_size;
     private final float default_inner_bottom_text_size;
     private final int min_size;
+    private boolean clockWise;
 
 
     private static final String INSTANCE_STATE = "saved_instance";
@@ -480,8 +481,13 @@ public class DonutProgress extends View
                 .min(finishedStrokeWidth, unfinishedStrokeWidth) + Math
                 .abs(finishedStrokeWidth - unfinishedStrokeWidth)) / 2f;
         canvas.drawCircle(getWidth() / 2.0f, getHeight() / 2.0f, innerCircleRadius, innerCirclePaint);
-        canvas.drawArc(finishedOuterRect, getStartingDegree(), getProgressAngle(), false, finishedPaint);
-        canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
+        if (!clockWise) {
+            canvas.drawArc(finishedOuterRect, -(360f - getStartingDegree()), -(getProgressAngle()), false, finishedPaint);
+            canvas.drawArc(unfinishedOuterRect, -(360f - getStartingDegree()) - getProgressAngle(), -(360f - getProgressAngle()), false, unfinishedPaint);
+        } else {
+            canvas.drawArc(finishedOuterRect, getStartingDegree(), getProgressAngle(), false, finishedPaint);
+            canvas.drawArc(unfinishedOuterRect, getStartingDegree() + getProgressAngle(), 360 - getProgressAngle(), false, unfinishedPaint);
+        }
 
         if (showText)
         {

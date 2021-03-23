@@ -40,7 +40,8 @@
         <attr name="donut_circle_starting_degree" format="integer" />
         <attr name="donut_show_text" format="boolean"/>
         <attr name="donut_inner_drawable" format="reference"/>
-    </declare-styleable>
+        <attr name="donut_clockWise" format="boolean"/>
+ </declare-styleable>
 
     <declare-styleable name="ArcProgress">
         <attr name="arc_progress" format="integer"/>
