@@ -2,7 +2,10 @@ package com.github.lzyzsd.circleprogressexample;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
@@ -34,21 +38,6 @@ public class MyActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_vector);
         donutProgress = (DonutProgress) findViewById(R.id.donut_progress);
-
-        /*AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.progress_anim2);
-        set.setTarget(donutProgress);
-        set.start();*/
-
-        /*ValueAnimator animation = ValueAnimator.ofObject(new IntEvaluator(), 0, 100);
-        animation.setDuration(1000);
-        animation.start();*/
-
-        /*PropertyValuesHolder donutAlphaProperty = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
-        PropertyValuesHolder donutProgressProperty = PropertyValuesHolder.ofInt("donut_progress", 0, 100);
-        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(donutProgress, donutAlphaProperty, donutProgressProperty);
-        animator.setDuration(2000);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.start();*/
 
         timer = new Timer();
         timer.schedule(new TimerTask()

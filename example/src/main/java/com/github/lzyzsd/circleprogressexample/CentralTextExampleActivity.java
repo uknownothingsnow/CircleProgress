@@ -1,18 +1,15 @@
 package com.github.lzyzsd.circleprogressexample;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.github.lzyzsd.circleprogress.CircleProgress;
-import com.github.lzyzsd.circleprogress.DonutProgress;
 
-public class CentralTextExampleActivity extends ActionBarActivity {
+public class CentralTextExampleActivity extends AppCompatActivity {
 
     ArcProgress arcProgress;
     CircleProgress circleProgress;
