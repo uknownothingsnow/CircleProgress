@@ -16,6 +16,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 /**
  * Created by bruce on 11/6/14.
@@ -43,6 +45,7 @@ public class ArcProgress extends View {
     private String suffixText = "%";
     private float suffixTextPadding;
     private Typeface typeFace;
+    private int fontResourceId;
 
     private float arcBottomHeight;
 
@@ -187,7 +190,8 @@ public class ArcProgress extends View {
     }
 
     public void setProgress(float progress) {
-        this.progress = Float.parseFloat(new DecimalFormat("#.##").format(progress));
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.US);
+        this.progress = Float.parseFloat(new DecimalFormat("#.##", dfs).format(progress));
 
         if (this.progress > getMax()) {
             this.progress %= getMax();
