@@ -1,6 +1,5 @@
 package com.github.lzyzsd.circleprogress;
 
-import android.arch.lifecycle.BuildConfig;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -44,6 +43,7 @@ public class ArcProgress extends View {
     private String suffixText = "%";
     private float suffixTextPadding;
     private Typeface typeFace;
+    private int fontResourceId;
 
     private float arcBottomHeight;
 
