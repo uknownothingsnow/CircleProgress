@@ -43,7 +43,6 @@ public class ArcProgress extends View {
     private String suffixText = "%";
     private float suffixTextPadding;
     private Typeface typeFace;
-    private int fontResourceId;
 
     private float arcBottomHeight;
 
@@ -188,7 +187,7 @@ public class ArcProgress extends View {
     }
 
     public void setProgress(float progress) {
-        this.progress = Float.valueOf(new DecimalFormat("#.##").format(progress));
+        this.progress = Float.parseFloat(new DecimalFormat("#.##").format(progress));
 
         if (this.progress > getMax()) {
             this.progress %= getMax();
