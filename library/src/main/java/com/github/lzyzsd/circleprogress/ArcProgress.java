@@ -6,14 +6,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 /**
  * Created by bruce on 11/6/14.
@@ -23,7 +27,6 @@ public class ArcProgress extends View {
     protected Paint textPaint;
 
     private RectF rectF = new RectF();
-
 
 
     private float strokeWidth;
@@ -41,6 +44,8 @@ public class ArcProgress extends View {
     private float arcAngle;
     private String suffixText = "%";
     private float suffixTextPadding;
+    private Typeface typeFace;
+    private int fontResourceId;
 
     private float arcBottomHeight;
 
@@ -113,7 +118,25 @@ public class ArcProgress extends View {
         suffixTextPadding = attributes.getDimension(R.styleable.ArcProgress_arc_suffix_text_padding, default_suffix_padding);
         bottomTextSize = attributes.getDimension(R.styleable.ArcProgress_arc_bottom_text_size, default_bottom_text_size);
         bottomText = attributes.getString(R.styleable.ArcProgress_arc_bottom_text);
+        initTypeFace(attributes);
     }
+
+    private void initTypeFace(TypedArray attributes) {
+        if (android.os.Build.VERSION.SDK_INT < 26) {
+            int fontId = attributes.getResourceId(R.styleable.ArcProgress_arc_suffix_text_font, 0);
+            if (fontId != 0) {
+                try {
+                    typeFace = ResourcesCompat.getFont(getContext(), fontId);
+                } catch (Exception e) {
+                    if (BuildConfig.DEBUG)
+                        e.printStackTrace();
+                }
+            }
+        } else {
+            typeFace = attributes.getFont(R.styleable.ArcProgress_arc_suffix_text_font);
+        }
+    }
+
 
     protected void initPainters() {
         textPaint = new TextPaint();
@@ -167,7 +190,8 @@ public class ArcProgress extends View {
     }
 
     public void setProgress(float progress) {
-        this.progress = Float.valueOf(new DecimalFormat("#.##").format(progress));
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.US);
+        this.progress = Float.parseFloat(new DecimalFormat("#.##", dfs).format(progress));
 
         if (this.progress > getMax()) {
             this.progress %= getMax();
@@ -175,8 +199,6 @@ public class ArcProgress extends View {
         currentProgress = 0;
         invalidate();
     }
-
-
 
 
     public int getMax() {
@@ -199,20 +221,22 @@ public class ArcProgress extends View {
         this.invalidate();
     }
 
-    public String getText(){ return text; }
+    public String getText() {
+        return text;
+    }
 
     /**
-     *   Setting Central Text to custom String
+     * Setting Central Text to custom String
      */
-    public void setText(String text){
+    public void setText(String text) {
         this.text = text;
         this.invalidate();
     }
 
     /**
-     *   Setting Central Text back to default one (value of the progress)
+     * Setting Central Text back to default one (value of the progress)
      */
-    public void setDefaultText(){
+    public void setDefaultText() {
         text = String.valueOf(getProgress());
         invalidate();
     }
@@ -306,13 +330,16 @@ public class ArcProgress extends View {
         float startAngle = 270 - arcAngle / 2f;
         float finishedSweepAngle = currentProgress / (float) getMax() * arcAngle;
         float finishedStartAngle = startAngle;
-        if(progress == 0) finishedStartAngle = 0.01f;
+        if (progress == 0) finishedStartAngle = 0.01f;
         paint.setColor(unfinishedStrokeColor);
         canvas.drawArc(rectF, startAngle, arcAngle, false, paint);
         paint.setColor(finishedStrokeColor);
         canvas.drawArc(rectF, finishedStartAngle, finishedSweepAngle, false, paint);
 
         String text = String.valueOf(currentProgress);
+        if (typeFace != null)
+            textPaint.setTypeface(typeFace);
+
         if (!TextUtils.isEmpty(text)) {
             textPaint.setColor(textColor);
             textPaint.setTextSize(textSize);
@@ -321,10 +348,10 @@ public class ArcProgress extends View {
             canvas.drawText(text, (getWidth() - textPaint.measureText(text)) / 2.0f, textBaseline, textPaint);
             textPaint.setTextSize(suffixTextSize);
             float suffixHeight = textPaint.descent() + textPaint.ascent();
-            canvas.drawText(suffixText, getWidth() / 2.0f  + textPaint.measureText(text) + suffixTextPadding, textBaseline + textHeight - suffixHeight, textPaint);
+            canvas.drawText(suffixText, getWidth() / 2.0f + textPaint.measureText(text) + suffixTextPadding, textBaseline + textHeight - suffixHeight, textPaint);
         }
 
-        if(arcBottomHeight == 0) {
+        if (arcBottomHeight == 0) {
             float radius = getWidth() / 2f;
             float angle = (360 - arcAngle) / 2f;
             arcBottomHeight = radius * (float) (1 - Math.cos(angle / 180 * Math.PI));
@@ -363,7 +390,7 @@ public class ArcProgress extends View {
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if(state instanceof Bundle) {
+        if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
             strokeWidth = bundle.getFloat(INSTANCE_STROKE_WIDTH);
             suffixTextSize = bundle.getFloat(INSTANCE_SUFFIX_TEXT_SIZE);
